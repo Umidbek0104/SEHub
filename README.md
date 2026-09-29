@@ -1,0 +1,2 @@
+# SEHub
+Maktab tadbirlar vwe
