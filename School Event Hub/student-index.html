@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O'quvchi Tadbirlar Sahifasi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f7fb;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #0d6efd, #0a58ca);
+    }
+
+    .navbar-brand, .nav-link {
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .hero-section {
+      background: linear-gradient(rgba(13,110,253,0.75), rgba(13,110,253,0.75)),
+      url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80') center/cover;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .section-title {
+      color: #0d6efd;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .event-card {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .event-card img {
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .announcement-box {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .suggestion-box {
+      background: linear-gradient(135deg, #0d6efd, #0a58ca);
+      color: white;
+      border-radius: 25px;
+      padding: 40px;
+    }
+
+    .btn-custom {
+      border-radius: 30px;
+      padding: 10px 24px;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #0b1f3a;
+      color: white;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top shadow">
+  <div class="container">
+    <a class="navbar-brand" href="#"><i class="fas fa-user-graduate me-2"></i>O'quvchi Platformasi</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#events">Tadbirlar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#announcements">E'lonlar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#suggestions">Takliflar</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-section">
+  <div class="container">
+    <h1>Maktab Tadbirlarini Kuzatib Boring</h1>
+    <p class="lead mt-3">Yangi tadbirlar, e'lonlar va o'z takliflaringizni shu yerda yuboring.</p>
+    <a href="#events" class="btn btn-light btn-custom mt-3">Tadbirlarni Ko'rish</a>
+  </div>
+</section>
+
+<!-- Events -->
+<section class="py-5" id="events">
+  <div class="container">
+    <h2 class="section-title">Mening va Boshqa Maktab Tadbirlari</h2>
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card event-card">
+          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="event">
+          <div class="card-body">
+            <h5 class="card-title">Navro'z Bayrami</h5>
+            <p class="card-text">21-Mart kuni maktab hovlisida o'tkaziladi.</p>
+            <button class="btn btn-primary btn-custom">Batafsil</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card event-card">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="event">
+          <div class="card-body">
+            <h5 class="card-title">Kitobxonlik Tanlovi</h5>
+            <p class="card-text">Eng faol kitobxonlar uchun maxsus tanlov.</p>
+            <button class="btn btn-primary btn-custom">Batafsil</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card event-card">
+          <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="event">
+          <div class="card-body">
+            <h5 class="card-title">Mustaqillik Darsi</h5>
+            <p class="card-text">Ma'naviy-ma'rifiy uchrashuv va tadbir.</p>
+            <button class="btn btn-primary btn-custom">Batafsil</button>
+          </div>
+        </div>
+      </div>
+
+          <div class="col-md-4">
+        <div class="card event-card">
+          <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="event">
+          <div class="card-body">
+            <h5 class="card-title">25-maktab Zakovat Turniri</h5>
+            <p class="card-text">Shahar bo'yicha bilimdonlar bellashuvi.</p>
+            <button class="btn btn-primary btn-custom me-2">Batafsil</button>
+            <button class="btn btn-outline-primary btn-custom">Ko'rish</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card event-card">
+          <img src="https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="event">
+          <div class="card-body">
+            <h5 class="card-title">12-maktab San'at Festivali</h5>
+            <p class="card-text">Musiqa, teatr va raqs festivali.</p>
+            <button class="btn btn-primary btn-custom me-2">Batafsil</button>
+            <button class="btn btn-outline-primary btn-custom">Ko'rish</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Announcements -->
+<section class="py-5 bg-light" id="announcements">
+  <div class="container">
+    <h2 class="section-title">Yangi E'lonlar va Boshqa Maktab Tadbirlari</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="announcement-box">
+          <h5><i class="fas fa-bullhorn text-primary me-2"></i>Yangi sport musobaqasi</h5>
+          <p>Kelasi hafta futbol musobaqasi tashkil etiladi. Barcha o'quvchilar qatnashishi mumkin.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="announcement-box">
+          <h5><i class="fas fa-bullhorn text-primary me-2"></i>Kasb tanlash seminari</h5>
+          <p>Bitiruvchi sinflar uchun yangi seminar tashkil etiladi.</p>
+        </div>
+      </div>
+          <div class="col-md-6">
+        <div class="announcement-box">
+          <h5><i class="fas fa-school text-primary me-2"></i>25-maktabdagi Zakovat turniri</h5>
+          <p>Shahar miqyosidagi intellektual musobaqa. Faol o'quvchilar uchun ochiq.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="announcement-box">
+          <h5><i class="fas fa-school text-primary me-2"></i>12-maktabdagi san'at festivali</h5>
+          <p>Ijodkor o'quvchilar uchun musiqa, raqs va teatr tadbirlari.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Suggestions -->
+<section class="py-5" id="suggestions">
+  <div class="container">
+    <div class="suggestion-box">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h2>O'z Taklifingizni Bildiring</h2>
+          <p>Yangi tadbirlar bo'yicha g'oya va takliflaringizni direktor o'rinbosariga yuboring.</p>
+        </div>
+        <div class="col-md-6">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Taklif mavzusi">
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" rows="4" placeholder="Taklifingizni yozing..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-light btn-custom">Yuborish</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container text-center">
+    <p class="mb-0">© 2026 O'quvchi Tadbirlar Platformasi | Barcha huquqlar himoyalangan</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert("Taklifingiz muvaffaqiyatli yuborildi!");
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
