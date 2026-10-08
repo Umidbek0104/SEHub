@@ -1,0 +1,1334 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>School Event Hub — Tadbir qo'shish</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 260px;
+      height: 100vh;
+      padding: 25px 15px;
+      background: linear-gradient(180deg, #0d6efd, #073b8c);
+      color: white;
+      z-index: 1000;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo i {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .logo h4 {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .logo small {
+      opacity: .8;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 16px;
+      margin-bottom: 7px;
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: .3s;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background: rgba(255,255,255,.18);
+      transform: translateX(3px);
+    }
+
+    .sidebar-menu i {
+      width: 22px;
+      text-align: center;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 260px;
+      padding: 30px;
+    }
+
+    /* ================= TOPBAR ================= */
+
+    .topbar {
+      background: white;
+      padding: 18px 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      margin-bottom: 25px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ================= PAGE TITLE ================= */
+
+    .page-title {
+      margin-bottom: 25px;
+    }
+
+    .page-title h2 {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .page-title p {
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* ================= FORM CARD ================= */
+
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 7px 25px rgba(0,0,0,.06);
+      margin-bottom: 25px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .section-heading .icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: #e8f1ff;
+      color: #0d6efd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .section-heading h5 {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .section-heading p {
+      margin: 3px 0 0;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 11px;
+      padding: 12px 14px;
+      border: 1px solid #dfe3e8;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 .2rem rgba(13,110,253,.10);
+    }
+
+    textarea.form-control {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    /* ================= IMAGE UPLOAD ================= */
+
+    .upload-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: .3s;
+      background: #fafcff;
+    }
+
+    .upload-box:hover {
+      border-color: #0d6efd;
+      background: #f5f9ff;
+    }
+
+    .upload-box i {
+      font-size: 40px;
+      color: #0d6efd;
+      margin-bottom: 12px;
+    }
+
+    .upload-box h6 {
+      font-weight: 700;
+    }
+
+    .upload-box p {
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    #imagePreview {
+      display: none;
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-top: 15px;
+    }
+
+    /* ================= PREVIEW ================= */
+
+    .preview-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 7px 25px rgba(0,0,0,.06);
+      position: sticky;
+      top: 25px;
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 18px;
+    }
+
+    .preview-title {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .preview-info {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .preview-info i {
+      color: #0d6efd;
+      width: 22px;
+    }
+
+    .preview-description {
+      border-top: 1px solid #e5e7eb;
+      margin-top: 15px;
+      padding-top: 15px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* ================= BUTTONS ================= */
+
+    .btn-custom {
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-weight: 600;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 991px) {
+
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      .preview-card {
+        position: static;
+      }
+
+      .topbar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start !important;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+  <div class="logo">
+
+    <i class="fas fa-school"></i>
+
+    <h4>School Event Hub</h4>
+
+    <small>Maktab tadbirlari</small>
+
+  </div>
+
+
+  <div class="sidebar-menu">
+
+    <a href="admin-dashboard.html">
+      <i class="fas fa-chart-line"></i>
+      Dashboard
+    </a>
+
+    <a href="events.html">
+      <i class="fas fa-calendar-alt"></i>
+      Tadbirlar
+    </a>
+
+    <a href="add-event.html" class="active">
+      <i class="fas fa-plus-circle"></i>
+      Tadbir qo‘shish
+    </a>
+
+    <a href="participants.html">
+      <i class="fas fa-users"></i>
+      Ishtirokchilar
+    </a>
+
+    <a href="suggestions.html">
+      <i class="fas fa-comments"></i>
+      Takliflar
+    </a>
+
+    <a href="gallery.html">
+      <i class="fas fa-images"></i>
+      Galereya
+    </a>
+
+    <a href="announcements.html">
+      <i class="fas fa-bullhorn"></i>
+      E'lonlar
+    </a>
+
+    <a href="deputy-profile.html">
+      <i class="fas fa-user"></i>
+      Profil
+    </a>
+
+    <a href="login.html">
+      <i class="fas fa-sign-out-alt"></i>
+      Chiqish
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+  <!-- TOPBAR -->
+
+  <div class="topbar d-flex justify-content-between align-items-center">
+
+    <div>
+
+      <strong>
+        Direktor o‘rinbosari paneli
+      </strong>
+
+      <br>
+
+      <small class="text-muted">
+        Yangi tadbir yaratish
+      </small>
+
+    </div>
+
+
+    <div class="profile">
+
+      <img
+        src="https://randomuser.me/api/portraits/men/32.jpg"
+        alt="profile"
+      >
+
+      <div>
+
+        <strong>
+          Direktor o‘rinbosari
+        </strong>
+
+        <br>
+
+        <small class="text-muted">
+          Administrator
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PAGE TITLE -->
+
+  <div class="page-title">
+
+    <h2>
+
+      <i class="fas fa-plus-circle text-primary me-2"></i>
+
+      Yangi tadbir qo‘shish
+
+    </h2>
+
+    <p>
+      Maktabda o'tkaziladigan yangi tadbir haqida ma'lumot kiriting.
+    </p>
+
+  </div>
+
+
+  <!-- CONTENT -->
+
+  <div class="row g-4">
+
+    <!-- ================= FORM ================= -->
+
+    <div class="col-lg-8">
+
+      <form id="eventForm">
+
+
+        <!-- BASIC INFORMATION -->
+
+        <div class="form-card">
+
+          <div class="section-heading">
+
+            <div class="icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+
+            <div>
+
+              <h5>
+                Asosiy ma'lumotlar
+              </h5>
+
+              <p>
+                Tadbirning asosiy ma'lumotlarini kiriting.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="row g-4">
+
+            <!-- NAME -->
+
+            <div class="col-12">
+
+              <label class="form-label">
+                Tadbir nomi *
+              </label>
+
+              <input
+                type="text"
+                id="eventName"
+                class="form-control"
+                placeholder="Masalan: Maktab futbol musobaqasi"
+                required
+              >
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Kategoriya *
+              </label>
+
+              <select
+                id="eventCategory"
+                class="form-select"
+                required
+              >
+
+                <option value="">
+                  Kategoriyani tanlang
+                </option>
+
+                <option value="Bayram">
+                  Bayram
+                </option>
+
+                <option value="Sport">
+                  Sport
+                </option>
+
+                <option value="Ta'lim">
+                  Ta'lim
+                </option>
+
+                <option value="San'at">
+                  San'at
+                </option>
+
+                <option value="Tanlov">
+                  Tanlov
+                </option>
+
+                <option value="Seminar">
+                  Seminar
+                </option>
+
+                <option value="Boshqa">
+                  Boshqa
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- ORGANIZER -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Tashkilotchi
+              </label>
+
+              <input
+                type="text"
+                id="organizer"
+                class="form-control"
+                placeholder="Masalan: Maktab ma'muriyati"
+              >
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Tadbir sanasi *
+              </label>
+
+              <input
+                type="date"
+                id="eventDate"
+                class="form-control"
+                required
+              >
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Boshlanish vaqti *
+              </label>
+
+              <input
+                type="time"
+                id="eventTime"
+                class="form-control"
+                required
+              >
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Tadbir joyi *
+              </label>
+
+              <input
+                type="text"
+                id="eventLocation"
+                class="form-control"
+                placeholder="Masalan: Maktab faollar zali"
+                required
+              >
+
+            </div>
+
+
+            <!-- PARTICIPANTS -->
+
+            <div class="col-md-6">
+
+              <label class="form-label">
+                Maksimal ishtirokchilar soni
+              </label>
+
+              <input
+                type="number"
+                id="participants"
+                class="form-control"
+                min="1"
+                placeholder="Masalan: 100"
+              >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="col-12">
+
+              <label class="form-label">
+                Tadbir tavsifi *
+              </label>
+
+              <textarea
+                id="eventDescription"
+                class="form-control"
+                placeholder="Tadbir haqida batafsil ma'lumot yozing..."
+                required
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-card">
+
+          <div class="section-heading">
+
+            <div class="icon">
+              <i class="fas fa-image"></i>
+            </div>
+
+            <div>
+
+              <h5>
+                Tadbir rasmi
+              </h5>
+
+              <p>
+                Tadbir uchun asosiy rasm yuklang.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <label
+            for="eventImage"
+            class="upload-box d-block"
+          >
+
+            <i class="fas fa-cloud-arrow-up"></i>
+
+            <h6>
+              Rasm yuklash
+            </h6>
+
+            <p>
+              PNG, JPG yoki JPEG formatida rasm tanlang
+            </p>
+
+            <p class="mt-2">
+              Maksimal hajm: 5 MB
+            </p>
+
+          </label>
+
+
+          <input
+            type="file"
+            id="eventImage"
+            accept="image/png,image/jpeg,image/jpg"
+            hidden
+          >
+
+
+          <img
+            id="imagePreview"
+            alt="Rasm preview"
+          >
+
+        </div>
+
+
+        <!-- PUBLISH -->
+
+        <div class="form-card">
+
+          <div class="section-heading">
+
+            <div class="icon">
+              <i class="fas fa-bullhorn"></i>
+            </div>
+
+            <div>
+
+              <h5>
+                E'lon qilish
+              </h5>
+
+              <p>
+                Tadbirni o'quvchilarga ko'rsatish sozlamalari.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-check form-switch mb-4">
+
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="publishEvent"
+              checked
+            >
+
+            <label
+              class="form-check-label fw-semibold"
+              for="publishEvent"
+            >
+              Tadbirni o'quvchilar uchun e'lon qilish
+            </label>
+
+          </div>
+
+
+          <div class="d-flex gap-2 justify-content-end">
+
+            <button
+              type="reset"
+              class="btn btn-light btn-custom"
+            >
+              <i class="fas fa-rotate-left me-2"></i>
+              Tozalash
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-custom"
+            >
+              <i class="fas fa-check me-2"></i>
+              Tadbirni saqlash
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+
+    <!-- ================= PREVIEW ================= -->
+
+    <div class="col-lg-4">
+
+      <div class="preview-card">
+
+        <h5 class="fw-bold mb-3">
+
+          <i class="fas fa-eye text-primary me-2"></i>
+
+          Oldindan ko‘rish
+
+        </h5>
+
+
+        <img
+          id="previewImage"
+          class="preview-image"
+          src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=900&q=80"
+          alt="Preview"
+        >
+
+
+        <span
+          id="previewCategory"
+          class="badge bg-primary mb-3"
+        >
+          Kategoriya
+        </span>
+
+
+        <div
+          id="previewTitle"
+          class="preview-title"
+        >
+          Tadbir nomi
+        </div>
+
+
+        <div class="preview-info">
+
+          <i class="fas fa-calendar"></i>
+
+          <span id="previewDate">
+            Sana tanlanmagan
+          </span>
+
+        </div>
+
+
+        <div class="preview-info">
+
+          <i class="fas fa-clock"></i>
+
+          <span id="previewTime">
+            Vaqt tanlanmagan
+          </span>
+
+        </div>
+
+
+        <div class="preview-info">
+
+          <i class="fas fa-location-dot"></i>
+
+          <span id="previewLocation">
+            Joy tanlanmagan
+          </span>
+
+        </div>
+
+
+        <div class="preview-info">
+
+          <i class="fas fa-users"></i>
+
+          <span id="previewParticipants">
+            Ishtirokchilar soni
+          </span>
+
+        </div>
+
+
+        <div class="preview-description">
+
+          <strong>
+            Tadbir haqida
+          </strong>
+
+          <p
+            id="previewDescription"
+            class="mt-2 mb-0"
+          >
+            Tadbir tavsifi shu yerda ko‘rinadi.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= SUCCESS MODAL ================= -->
+
+<div
+  class="modal fade"
+  id="successModal"
+  tabindex="-1"
+>
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-body text-center p-5">
+
+        <div
+          class="mx-auto mb-4 rounded-circle d-flex align-items-center justify-content-center"
+          style="
+            width:75px;
+            height:75px;
+            background:#d1e7dd;
+            color:#198754;
+            font-size:35px;
+          "
+        >
+
+          <i class="fas fa-check"></i>
+
+        </div>
+
+
+        <h4 class="fw-bold">
+          Tadbir muvaffaqiyatli saqlandi!
+        </h4>
+
+        <p class="text-muted">
+          Yangi tadbir tizimga qo‘shildi.
+        </p>
+
+
+        <button
+          class="btn btn-primary btn-custom"
+          data-bs-dismiss="modal"
+        >
+          Davom etish
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= BOOTSTRAP JS ================= -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script>
+
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+
+  const form =
+    document.getElementById("eventForm");
+
+  const eventName =
+    document.getElementById("eventName");
+
+  const eventCategory =
+    document.getElementById("eventCategory");
+
+  const eventDate =
+    document.getElementById("eventDate");
+
+  const eventTime =
+    document.getElementById("eventTime");
+
+  const eventLocation =
+    document.getElementById("eventLocation");
+
+  const participants =
+    document.getElementById("participants");
+
+  const eventDescription =
+    document.getElementById("eventDescription");
+
+  const eventImage =
+    document.getElementById("eventImage");
+
+  const organizer =
+    document.getElementById("organizer");
+
+
+  /* =====================================================
+     PREVIEW ELEMENTS
+  ===================================================== */
+
+  const previewTitle =
+    document.getElementById("previewTitle");
+
+  const previewCategory =
+    document.getElementById("previewCategory");
+
+  const previewDate =
+    document.getElementById("previewDate");
+
+  const previewTime =
+    document.getElementById("previewTime");
+
+  const previewLocation =
+    document.getElementById("previewLocation");
+
+  const previewParticipants =
+    document.getElementById("previewParticipants");
+
+  const previewDescription =
+    document.getElementById("previewDescription");
+
+  const previewImage =
+    document.getElementById("previewImage");
+
+
+  /* =====================================================
+     UPDATE TITLE
+  ===================================================== */
+
+  eventName.addEventListener("input", function () {
+
+    previewTitle.textContent =
+      this.value ||
+      "Tadbir nomi";
+
+  });
+
+
+  /* =====================================================
+     UPDATE CATEGORY
+  ===================================================== */
+
+  eventCategory.addEventListener("change", function () {
+
+    previewCategory.textContent =
+      this.value ||
+      "Kategoriya";
+
+  });
+
+
+  /* =====================================================
+     UPDATE DATE
+  ===================================================== */
+
+  eventDate.addEventListener("change", function () {
+
+    if (!this.value) {
+
+      previewDate.textContent =
+        "Sana tanlanmagan";
+
+      return;
+
+    }
+
+
+    const date =
+      new Date(this.value + "T00:00:00");
+
+
+    const formatted =
+      date.toLocaleDateString(
+        "uz-UZ",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        }
+      );
+
+
+    previewDate.textContent =
+      formatted;
+
+  });
+
+
+  /* =====================================================
+     UPDATE TIME
+  ===================================================== */
+
+  eventTime.addEventListener("change", function () {
+
+    previewTime.textContent =
+      this.value ||
+      "Vaqt tanlanmagan";
+
+  });
+
+
+  /* =====================================================
+     UPDATE LOCATION
+  ===================================================== */
+
+  eventLocation.addEventListener("input", function () {
+
+    previewLocation.textContent =
+      this.value ||
+      "Joy tanlanmagan";
+
+  });
+
+
+  /* =====================================================
+     UPDATE PARTICIPANTS
+  ===================================================== */
+
+  participants.addEventListener("input", function () {
+
+    previewParticipants.textContent =
+      this.value
+        ? this.value + " nafar"
+        : "Ishtirokchilar soni";
+
+  });
+
+
+  /* =====================================================
+     UPDATE DESCRIPTION
+  ===================================================== */
+
+  eventDescription.addEventListener("input", function () {
+
+    previewDescription.textContent =
+      this.value ||
+      "Tadbir tavsifi shu yerda ko‘rinadi.";
+
+  });
+
+
+  /* =====================================================
+     IMAGE UPLOAD
+  ===================================================== */
+
+  eventImage.addEventListener("change", function () {
+
+    const file =
+      this.files[0];
+
+    if (!file) {
+      return;
+    }
+
+
+    /* FILE SIZE */
+
+    if (file.size > 5 * 1024 * 1024) {
+
+      alert(
+        "Rasm hajmi 5 MB dan katta bo‘lmasligi kerak!"
+      );
+
+      this.value = "";
+
+      return;
+    }
+
+
+    /* FILE READER */
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function (e) {
+
+        const image =
+          document.getElementById("imagePreview");
+
+        image.src =
+          e.target.result;
+
+        image.style.display =
+          "block";
+
+
+        previewImage.src =
+          e.target.result;
+
+      };
+
+
+    reader.readAsDataURL(file);
+
+  });
+
+
+  /* =====================================================
+     FORM SUBMIT
+  ===================================================== */
+
+  form.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+
+    if (!form.checkValidity()) {
+
+      form.classList.add("was-validated");
+
+      return;
+
+    }
+
+
+    const modal =
+      new bootstrap.Modal(
+        document.getElementById("successModal")
+      );
+
+
+    modal.show();
+
+
+    console.log("Yangi tadbir:", {
+
+      name: eventName.value,
+
+      category:
+        eventCategory.value,
+
+      organizer:
+        organizer.value,
+
+      date:
+        eventDate.value,
+
+      time:
+        eventTime.value,
+
+      location:
+        eventLocation.value,
+
+      participants:
+        participants.value,
+
+      description:
+        eventDescription.value
+
+    });
+
+  });
+
+
+  /* =====================================================
+     RESET
+  ===================================================== */
+
+  form.addEventListener("reset", function () {
+
+    setTimeout(function () {
+
+      previewTitle.textContent =
+        "Tadbir nomi";
+
+      previewCategory.textContent =
+        "Kategoriya";
+
+      previewDate.textContent =
+        "Sana tanlanmagan";
+
+      previewTime.textContent =
+        "Vaqt tanlanmagan";
+
+      previewLocation.textContent =
+        "Joy tanlanmagan";
+
+      previewParticipants.textContent =
+        "Ishtirokchilar soni";
+
+      previewDescription.textContent =
+        "Tadbir tavsifi shu yerda ko‘rinadi.";
+
+      document.getElementById(
+        "imagePreview"
+      ).style.display = "none";
+
+
+      previewImage.src =
+        "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=900&q=80";
+
+    }, 100);
+
+  });
+
+</script>
+
+</body>
+</html>
+```
