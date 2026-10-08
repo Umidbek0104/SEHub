@@ -1,0 +1,2150 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>E'lonlar | School Event Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --light-blue: #eff6ff;
+            --dark: #172033;
+            --muted: #64748b;
+            --border: #e5e7eb;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--dark);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 255px;
+            height: 100vh;
+            background: linear-gradient(180deg, #2563eb, #1e40af);
+            color: white;
+            padding: 22px 15px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 10px 25px;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,.15);
+            border-radius: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-title {
+            padding: 23px 12px 8px;
+            font-size: 10px;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            opacity: .6;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 13px;
+            margin-bottom: 4px;
+            color: rgba(255,255,255,.85);
+            text-decoration: none;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .sidebar a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: rgba(255,255,255,.15);
+            color: white;
+        }
+
+        .sidebar a.active {
+            box-shadow: inset 3px 0 0 white;
+        }
+
+        .logout {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,.15);
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .page-title h4 {
+            margin: 0;
+            font-weight: 750;
+        }
+
+        .page-title small {
+            color: var(--muted);
+        }
+
+        .top-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .top-profile strong {
+            font-size: 14px;
+        }
+
+        .top-profile small {
+            display: block;
+            color: var(--muted);
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 30px;
+        }
+
+        /* STATS */
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            height: 100%;
+            transition: .2s;
+            box-shadow: 0 5px 20px rgba(15,23,42,.04);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15,23,42,.08);
+        }
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+            color: var(--primary);
+            font-size: 19px;
+            margin-bottom: 13px;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* TOOLBAR */
+        .toolbar {
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 20px rgba(15,23,42,.04);
+            margin: 25px 0;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 13px;
+            top: 12px;
+            color: #94a3b8;
+        }
+
+        .search-box input {
+            padding-left: 38px;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 9px;
+            padding: 10px 12px;
+            border-color: #dfe4ea;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+        }
+
+        /* ANNOUNCEMENT CARD */
+        .announcement-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 6px 22px rgba(15,23,42,.05);
+            transition: .25s;
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 13px 30px rgba(15,23,42,.09);
+        }
+
+        .announcement-top {
+            padding: 20px;
+            position: relative;
+        }
+
+        .announcement-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .icon-blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .icon-green {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .icon-orange {
+            background: #ffedd5;
+            color: #ea580c;
+        }
+
+        .icon-purple {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .icon-red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .icon-cyan {
+            background: #cffafe;
+            color: #0891b2;
+        }
+
+        .announcement-card h5 {
+            font-size: 17px;
+            line-height: 1.4;
+            margin-bottom: 9px;
+            font-weight: 750;
+        }
+
+        .announcement-text {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+            min-height: 65px;
+        }
+
+        .announcement-meta {
+            padding: 14px 20px;
+            border-top: 1px solid #f0f2f5;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .announcement-meta i {
+            margin-right: 4px;
+        }
+
+        .badge-status {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 10px;
+            border-radius: 20px;
+            padding: 5px 9px;
+        }
+
+        /* EMPTY */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 70px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 55px;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        /* MODAL */
+        .modal-content {
+            border: none;
+            border-radius: 17px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .announcement-view-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 992px) {
+
+            .sidebar {
+                width: 75px;
+                padding: 18px 10px;
+            }
+
+            .brand span,
+            .sidebar a span,
+            .menu-title {
+                display: none;
+            }
+
+            .brand {
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .sidebar a {
+                justify-content: center;
+            }
+
+            .sidebar a.active {
+                box-shadow: none;
+            }
+
+            .main {
+                margin-left: 75px;
+            }
+        }
+
+        @media(max-width: 768px) {
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .top-profile div {
+                display: none;
+            }
+        }
+
+        @media(max-width: 576px) {
+
+            .sidebar {
+                width: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 14px;
+            }
+
+            .toolbar {
+                padding: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+
+        <span>School Event Hub</span>
+
+    </div>
+
+
+    <div class="menu-title">
+        Asosiy
+    </div>
+
+
+    <a href="admin-dashboard.html">
+        <i class="fa-solid fa-gauge-high"></i>
+        <span>Dashboard</span>
+    </a>
+
+
+    <a href="events.html">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Tadbirlar</span>
+    </a>
+
+
+    <a href="add-event.html">
+        <i class="fa-solid fa-plus"></i>
+        <span>Tadbir qo‘shish</span>
+    </a>
+
+
+    <a href="participants.html">
+        <i class="fa-solid fa-users"></i>
+        <span>Ishtirokchilar</span>
+    </a>
+
+
+    <a href="suggestions.html">
+        <i class="fa-solid fa-comments"></i>
+        <span>Takliflar</span>
+    </a>
+
+
+    <a href="gallery.html">
+        <i class="fa-solid fa-images"></i>
+        <span>Galereya</span>
+    </a>
+
+
+    <a href="announcements.html" class="active">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>E'lonlar</span>
+    </a>
+
+
+    <div class="menu-title">
+        Tizim
+    </div>
+
+
+    <a href="deputy-profile.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+
+    <a href="#">
+        <i class="fa-solid fa-gear"></i>
+        <span>Sozlamalar</span>
+    </a>
+
+
+    <div class="logout">
+
+        <a href="login.html">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Chiqish</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <div class="page-title">
+
+            <h4>
+                E'lonlar
+            </h4>
+
+            <small>
+                Maktab e'lonlarini boshqarish
+            </small>
+
+        </div>
+
+
+        <div class="top-profile">
+
+            <img src="https://i.pravatar.cc/100?img=47"
+                 alt="Profile">
+
+            <div>
+
+                <strong>
+                    Madina Karimova
+                </strong>
+
+                <small>
+                    Direktor o‘rinbosari
+                </small>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-down text-muted ms-2"></i>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- PAGE HEADER -->
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div>
+
+                <h3 class="fw-bold mb-1">
+                    Maktab e'lonlari
+                </h3>
+
+                <p class="text-muted mb-0">
+                    O‘quvchilar va ota-onalar uchun muhim ma'lumotlarni joylashtiring.
+                </p>
+
+            </div>
+
+
+            <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addAnnouncementModal">
+
+                <i class="fa-solid fa-plus me-1"></i>
+                Yangi e'lon
+
+            </button>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="row g-4 mt-2">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+
+                    <div class="stat-number"
+                         id="totalAnnouncements">
+                        24
+                    </div>
+
+                    <div class="stat-label">
+                        Jami e'lonlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        18
+                    </div>
+
+                    <div class="stat-label">
+                        Faol e'lonlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        2,846
+                    </div>
+
+                    <div class="stat-label">
+                        Ko‘rishlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        6
+                    </div>
+
+                    <div class="stat-label">
+                        Rejalashtirilgan
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+
+            <div class="row g-3 align-items-center">
+
+                <div class="col-lg-5">
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-search"></i>
+
+                        <input type="text"
+                               class="form-control"
+                               id="searchInput"
+                               placeholder="E'lon nomi yoki matni bo‘yicha qidirish...">
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 col-lg-2">
+
+                    <select class="form-select"
+                            id="categoryFilter">
+
+                        <option value="all">
+                            Barcha kategoriyalar
+                        </option>
+
+                        <option value="important">
+                            Muhim
+                        </option>
+
+                        <option value="education">
+                            Ta'lim
+                        </option>
+
+                        <option value="event">
+                            Tadbir
+                        </option>
+
+                        <option value="sport">
+                            Sport
+                        </option>
+
+                        <option value="general">
+                            Umumiy
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-md-4 col-lg-2">
+
+                    <select class="form-select"
+                            id="statusFilter">
+
+                        <option value="all">
+                            Barcha holatlar
+                        </option>
+
+                        <option value="active">
+                            Faol
+                        </option>
+
+                        <option value="scheduled">
+                            Rejalashtirilgan
+                        </option>
+
+                        <option value="expired">
+                            Muddati tugagan
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-md-4 col-lg-3">
+
+                    <button class="btn btn-light w-100"
+                            onclick="resetFilters()">
+
+                        <i class="fa-solid fa-rotate-left me-1"></i>
+                        Filtrlarni tozalash
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANNOUNCEMENTS -->
+        <div class="row g-4"
+             id="announcementContainer">
+
+
+            <!-- CARD 1 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="important"
+                 data-status="active"
+                 data-search="maktab hududida xavfsizlik qoidalari muhim">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-success badge-status">
+                            Faol
+                        </span>
+
+                        <div class="announcement-icon icon-red">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <h5>
+                            Maktab hududida xavfsizlik qoidalari
+                        </h5>
+
+                        <div class="announcement-text">
+                            Barcha o‘quvchilar maktab hududida xavfsizlik
+                            qoidalariga qat'iy rioya qilishlari so‘raladi.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        07.10.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            324
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Maktab hududida xavfsizlik qoidalari',
+                                'Barcha o‘quvchilar maktab hududida xavfsizlik qoidalariga qat’iy rioya qilishlari so‘raladi.',
+                                'Muhim',
+                                '07.10.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="event"
+                 data-status="active"
+                 data-search="zakovat turniri ro‘yxatdan o‘tish tadbir">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-success badge-status">
+                            Faol
+                        </span>
+
+                        <div class="announcement-icon icon-blue">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+
+                        <h5>
+                            Zakovat turniriga ro‘yxatdan o‘tish
+                        </h5>
+
+                        <div class="announcement-text">
+                            25-maktab Zakovat turnirida qatnashmoqchi bo‘lgan
+                            o‘quvchilar ro‘yxatdan o‘tishlari mumkin.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        06.10.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            512
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Zakovat turniriga ro‘yxatdan o‘tish',
+                                '25-maktab Zakovat turnirida qatnashmoqchi bo‘lgan o‘quvchilar ro‘yxatdan o‘tishlari mumkin.',
+                                'Tadbir',
+                                '06.10.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 3 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="education"
+                 data-status="active"
+                 data-search="fan olimpiadasi informatika matematika fizika">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-success badge-status">
+                            Faol
+                        </span>
+
+                        <div class="announcement-icon icon-purple">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+
+                        <h5>
+                            Fan olimpiadasiga tayyorgarlik
+                        </h5>
+
+                        <div class="announcement-text">
+                            Informatika, matematika va fizika fanlaridan
+                            olimpiada mashg‘ulotlari boshlanadi.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        05.10.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            286
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Fan olimpiadasiga tayyorgarlik',
+                                'Informatika, matematika va fizika fanlaridan olimpiada mashg‘ulotlari boshlanadi.',
+                                'Ta’lim',
+                                '05.10.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 4 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="sport"
+                 data-status="active"
+                 data-search="futbol musobaqasi sport yoshlar">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-success badge-status">
+                            Faol
+                        </span>
+
+                        <div class="announcement-icon icon-green">
+                            <i class="fa-solid fa-futbol"></i>
+                        </div>
+
+                        <h5>
+                            Maktab futbol musobaqasi
+                        </h5>
+
+                        <div class="announcement-text">
+                            Sinflar o‘rtasida futbol musobaqasi o‘tkaziladi.
+                            Barcha jamoalar ishtirok etishi mumkin.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        04.10.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            421
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Maktab futbol musobaqasi',
+                                'Sinflar o‘rtasida futbol musobaqasi o‘tkaziladi. Barcha jamoalar ishtirok etishi mumkin.',
+                                'Sport',
+                                '04.10.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 5 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="general"
+                 data-status="scheduled"
+                 data-search="ota onalar yig‘ilishi ota-onalar">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-warning text-dark badge-status">
+                            Rejalashtirilgan
+                        </span>
+
+                        <div class="announcement-icon icon-orange">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+
+                        <h5>
+                            Ota-onalar yig‘ilishi
+                        </h5>
+
+                        <div class="announcement-text">
+                            10–11-sinf o‘quvchilarining ota-onalari uchun
+                            umumiy yig‘ilish tashkil etiladi.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        15.10.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            0
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Ota-onalar yig‘ilishi',
+                                '10–11-sinf o‘quvchilarining ota-onalari uchun umumiy yig‘ilish tashkil etiladi.',
+                                'Umumiy',
+                                '15.10.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD 6 -->
+            <div class="col-md-6 col-xl-4 announcement-wrapper"
+                 data-category="education"
+                 data-status="expired"
+                 data-search="kitobxonlik haftaligi kutubxona kitob">
+
+                <div class="announcement-card">
+
+                    <div class="announcement-top">
+
+                        <span class="badge bg-secondary badge-status">
+                            Muddati tugagan
+                        </span>
+
+                        <div class="announcement-icon icon-cyan">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+
+                        <h5>
+                            Kitobxonlik haftaligi
+                        </h5>
+
+                        <div class="announcement-text">
+                            Maktabimizda kitobxonlik haftaligi doirasida
+                            turli tanlov va uchrashuvlar tashkil etildi.
+                        </div>
+
+                    </div>
+
+                    <div class="announcement-meta">
+
+                        <i class="fa-regular fa-calendar"></i>
+                        20.09.2026
+
+                        <span class="float-end">
+                            <i class="fa-solid fa-eye"></i>
+                            734
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 pt-0 d-flex gap-2">
+
+                        <button class="btn btn-sm btn-outline-primary flex-fill"
+                                onclick="viewAnnouncement(
+                                'Kitobxonlik haftaligi',
+                                'Maktabimizda kitobxonlik haftaligi doirasida turli tanlov va uchrashuvlar tashkil etildi.',
+                                'Ta’lim',
+                                '20.09.2026'
+                                )">
+
+                            <i class="fa-solid fa-eye"></i>
+                            Ko‘rish
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light"
+                                onclick="editAnnouncement(this)">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
+
+                        <button class="btn btn-sm btn-light text-danger"
+                                onclick="deleteAnnouncement(this)">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EMPTY -->
+        <div class="empty-state"
+             id="emptyState">
+
+            <i class="fa-solid fa-bullhorn"></i>
+
+            <h5>
+                E'lon topilmadi
+            </h5>
+
+            <p>
+                Qidiruv yoki filtr shartlarini o‘zgartirib ko‘ring.
+            </p>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+
+            <small class="text-muted"
+                   id="resultCount">
+                6 ta e'lon ko‘rsatilmoqda
+            </small>
+
+            <nav>
+
+                <ul class="pagination mb-0">
+
+                    <li class="page-item disabled">
+                        <a class="page-link">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    <li class="page-item active">
+                        <a class="page-link">1</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">2</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">3</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ADD ANNOUNCEMENT MODAL -->
+<div class="modal fade"
+     id="addAnnouncementModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i class="fa-solid fa-bullhorn me-2"></i>
+                    Yangi e'lon qo‘shish
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <form id="announcementForm">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label class="form-label">
+                                E'lon sarlavhasi *
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="announcementTitle"
+                                   placeholder="Masalan: Ota-onalar yig‘ilishi"
+                                   required>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Kategoriya
+                            </label>
+
+                            <select class="form-select"
+                                    id="announcementCategory">
+
+                                <option value="general">
+                                    Umumiy
+                                </option>
+
+                                <option value="important">
+                                    Muhim
+                                </option>
+
+                                <option value="education">
+                                    Ta'lim
+                                </option>
+
+                                <option value="event">
+                                    Tadbir
+                                </option>
+
+                                <option value="sport">
+                                    Sport
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                E'lon sanasi
+                            </label>
+
+                            <input type="date"
+                                   class="form-control"
+                                   id="announcementDate">
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Holati
+                            </label>
+
+                            <select class="form-select"
+                                    id="announcementStatus">
+
+                                <option value="active">
+                                    Faol
+                                </option>
+
+                                <option value="scheduled">
+                                    Rejalashtirilgan
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <label class="form-label">
+                                E'lon matni *
+                            </label>
+
+                            <textarea class="form-control"
+                                      id="announcementText"
+                                      rows="5"
+                                      placeholder="E'lon mazmunini yozing..."
+                                      required></textarea>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="importantCheck">
+
+                                <label class="form-check-label"
+                                       for="importantCheck">
+
+                                    E'lonni muhim sifatida belgilash
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-light"
+                        data-bs-dismiss="modal">
+                    Bekor qilish
+                </button>
+
+                <button class="btn btn-primary"
+                        onclick="addAnnouncement()">
+
+                    <i class="fa-solid fa-plus me-1"></i>
+                    E'lonni joylash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- VIEW MODAL -->
+<div class="modal fade"
+     id="viewAnnouncementModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    E'lon tafsilotlari
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body p-4">
+
+                <div class="announcement-view-icon">
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                </div>
+
+                <h4 id="viewTitle"
+                    class="fw-bold">
+                    E'lon
+                </h4>
+
+                <div class="mb-3">
+
+                    <span class="badge bg-primary"
+                          id="viewCategory">
+                        Umumiy
+                    </span>
+
+                    <span class="text-muted small ms-2"
+                          id="viewDate">
+                        07.10.2026
+                    </span>
+
+                </div>
+
+                <p id="viewText"
+                   class="text-muted"
+                   style="line-height:1.8">
+                </p>
+
+                <hr>
+
+                <div class="d-flex justify-content-between text-muted small">
+
+                    <span>
+                        <i class="fa-solid fa-user me-1"></i>
+                        Madina Karimova
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-eye me-1"></i>
+                        324 marta ko‘rilgan
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Yopish
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- DELETE MODAL -->
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-body text-center p-4">
+
+                <div class="mb-3"
+                     style="font-size:50px;color:#dc2626">
+
+                    <i class="fa-solid fa-trash-can"></i>
+
+                </div>
+
+                <h5 class="fw-bold">
+                    E'lonni o‘chirishni xohlaysizmi?
+                </h5>
+
+                <p class="text-muted">
+                    Ushbu amalni qaytarib bo‘lmaydi.
+                </p>
+
+                <div class="d-flex justify-content-center gap-2">
+
+                    <button class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Bekor qilish
+                    </button>
+
+                    <button class="btn btn-danger"
+                            id="confirmDelete">
+                        Ha, o‘chirish
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-4">
+
+    <div id="successToast"
+         class="toast border-0 shadow">
+
+        <div class="toast-header">
+
+            <i class="fa-solid fa-circle-check text-success me-2"></i>
+
+            <strong class="me-auto">
+                Muvaffaqiyatli
+            </strong>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body"
+             id="toastMessage">
+            Amal muvaffaqiyatli bajarildi.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    /* FILTER */
+    function filterAnnouncements() {
+
+        const search =
+            document.getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const category =
+            document.getElementById("categoryFilter").value;
+
+        const status =
+            document.getElementById("statusFilter").value;
+
+        const cards =
+            document.querySelectorAll(".announcement-wrapper");
+
+        let visible = 0;
+
+        cards.forEach(card => {
+
+            const cardSearch =
+                card.dataset.search.toLowerCase();
+
+            const cardCategory =
+                card.dataset.category;
+
+            const cardStatus =
+                card.dataset.status;
+
+            const searchMatch =
+                cardSearch.includes(search);
+
+            const categoryMatch =
+                category === "all" ||
+                cardCategory === category;
+
+            const statusMatch =
+                status === "all" ||
+                cardStatus === status;
+
+            if (
+                searchMatch &&
+                categoryMatch &&
+                statusMatch
+            ) {
+
+                card.style.display = "";
+
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        document.getElementById("resultCount")
+            .textContent =
+            visible + " ta e'lon ko‘rsatilmoqda";
+
+
+        document.getElementById("emptyState")
+            .style.display =
+            visible === 0 ? "block" : "none";
+    }
+
+
+    document.getElementById("searchInput")
+        .addEventListener(
+            "input",
+            filterAnnouncements
+        );
+
+
+    document.getElementById("categoryFilter")
+        .addEventListener(
+            "change",
+            filterAnnouncements
+        );
+
+
+    document.getElementById("statusFilter")
+        .addEventListener(
+            "change",
+            filterAnnouncements
+        );
+
+
+    /* RESET */
+    function resetFilters() {
+
+        document.getElementById("searchInput")
+            .value = "";
+
+        document.getElementById("categoryFilter")
+            .value = "all";
+
+        document.getElementById("statusFilter")
+            .value = "all";
+
+        filterAnnouncements();
+    }
+
+
+    /* VIEW */
+    function viewAnnouncement(
+        title,
+        text,
+        category,
+        date
+    ) {
+
+        document.getElementById("viewTitle")
+            .textContent = title;
+
+        document.getElementById("viewText")
+            .textContent = text;
+
+        document.getElementById("viewCategory")
+            .textContent = category;
+
+        document.getElementById("viewDate")
+            .textContent = date;
+
+        const modal =
+            new bootstrap.Modal(
+                document.getElementById(
+                    "viewAnnouncementModal"
+                )
+            );
+
+        modal.show();
+    }
+
+
+    /* DELETE */
+    let cardToDelete = null;
+
+    function deleteAnnouncement(button) {
+
+        cardToDelete =
+            button.closest(".announcement-wrapper");
+
+        const modal =
+            new bootstrap.Modal(
+                document.getElementById("deleteModal")
+            );
+
+        modal.show();
+    }
+
+
+    document.getElementById("confirmDelete")
+        .addEventListener("click", function () {
+
+            if (cardToDelete) {
+
+                cardToDelete.remove();
+
+                cardToDelete = null;
+
+                const modalElement =
+                    document.getElementById("deleteModal");
+
+                const modal =
+                    bootstrap.Modal.getInstance(
+                        modalElement
+                    );
+
+                modal.hide();
+
+                filterAnnouncements();
+
+                showToast(
+                    "E'lon muvaffaqiyatli o‘chirildi."
+                );
+
+            }
+
+        });
+
+
+    /* EDIT */
+    function editAnnouncement(button) {
+
+        const card =
+            button.closest(".announcement-card");
+
+        const title =
+            card.querySelector("h5").textContent.trim();
+
+        const text =
+            card.querySelector(".announcement-text")
+                .textContent.trim();
+
+        document.getElementById("announcementTitle")
+            .value = title;
+
+        document.getElementById("announcementText")
+            .value = text;
+
+        const modal =
+            new bootstrap.Modal(
+                document.getElementById(
+                    "addAnnouncementModal"
+                )
+            );
+
+        modal.show();
+
+    }
+
+
+    /* ADD */
+    function addAnnouncement() {
+
+        const title =
+            document.getElementById(
+                "announcementTitle"
+            ).value.trim();
+
+        const text =
+            document.getElementById(
+                "announcementText"
+            ).value.trim();
+
+        if (!title || !text) {
+
+            alert(
+                "Iltimos, sarlavha va e'lon matnini kiriting."
+            );
+
+            return;
+        }
+
+
+        const category =
+            document.getElementById(
+                "announcementCategory"
+            ).value;
+
+        const status =
+            document.getElementById(
+                "announcementStatus"
+            ).value;
+
+
+        const date =
+            document.getElementById(
+                "announcementDate"
+            ).value ||
+            new Date().toISOString().split("T")[0];
+
+
+        const categoryNames = {
+
+            important: "Muhim",
+            education: "Ta'lim",
+            event: "Tadbir",
+            sport: "Sport",
+            general: "Umumiy"
+
+        };
+
+
+        const iconMap = {
+
+            important: "fa-triangle-exclamation",
+            education: "fa-graduation-cap",
+            event: "fa-calendar-days",
+            sport: "fa-futbol",
+            general: "fa-bullhorn"
+
+        };
+
+
+        const colorMap = {
+
+            important: "icon-red",
+            education: "icon-purple",
+            event: "icon-blue",
+            sport: "icon-green",
+            general: "icon-cyan"
+
+        };
+
+
+        const statusText =
+            status === "active"
+                ? "Faol"
+                : "Rejalashtirilgan";
+
+
+        const statusClass =
+            status === "active"
+                ? "bg-success"
+                : "bg-warning text-dark";
+
+
+        const formattedDate =
+            new Date(date).toLocaleDateString(
+                "uz-UZ"
+            );
+
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            "col-md-6 col-xl-4 announcement-wrapper";
+
+        wrapper.dataset.category = category;
+        wrapper.dataset.status = status;
+        wrapper.dataset.search =
+            (title + " " + text).toLowerCase();
+
+
+        wrapper.innerHTML = `
+
+            <div class="announcement-card">
+
+                <div class="announcement-top">
+
+                    <span class="badge ${statusClass} badge-status">
+                        ${statusText}
+                    </span>
+
+                    <div class="announcement-icon ${colorMap[category]}">
+                        <i class="fa-solid ${iconMap[category]}"></i>
+                    </div>
+
+                    <h5>
+                        ${title}
+                    </h5>
+
+                    <div class="announcement-text">
+                        ${text}
+                    </div>
+
+                </div>
+
+                <div class="announcement-meta">
+
+                    <i class="fa-regular fa-calendar"></i>
+                    ${formattedDate}
+
+                    <span class="float-end">
+                        <i class="fa-solid fa-eye"></i>
+                        0
+                    </span>
+
+                </div>
+
+                <div class="p-3 pt-0 d-flex gap-2">
+
+                    <button
+                        class="btn btn-sm btn-outline-primary flex-fill"
+                        onclick="viewAnnouncement(
+                            '${title.replace(/'/g, "\\'")}',
+                            '${text.replace(/'/g, "\\'")}',
+                            '${categoryNames[category]}',
+                            '${formattedDate}'
+                        )">
+
+                        <i class="fa-solid fa-eye"></i>
+                        Ko‘rish
+
+                    </button>
+
+                    <button
+                        class="btn btn-sm btn-light"
+                        onclick="editAnnouncement(this)">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                    </button>
+
+                    <button
+                        class="btn btn-sm btn-light text-danger"
+                        onclick="deleteAnnouncement(this)">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+
+        document.getElementById(
+            "announcementContainer"
+        ).prepend(wrapper);
+
+
+        const modalElement =
+            document.getElementById(
+                "addAnnouncementModal"
+            );
+
+        const modal =
+            bootstrap.Modal.getInstance(
+                modalElement
+            );
+
+        modal.hide();
+
+
+        document.getElementById(
+            "announcementForm"
+        ).reset();
+
+
+        filterAnnouncements();
+
+
+        showToast(
+            "Yangi e'lon muvaffaqiyatli qo‘shildi."
+        );
+
+    }
+
+
+    /* TOAST */
+    function showToast(message) {
+
+        document.getElementById(
+            "toastMessage"
+        ).textContent = message;
+
+        const toast =
+            new bootstrap.Toast(
+                document.getElementById(
+                    "successToast"
+                )
+            );
+
+        toast.show();
+
+    }
+
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,1588 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tadbirlar | School Event Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #172033;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 13px 0;
+            box-shadow: 0 4px 18px rgba(37,99,235,.18);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 800;
+            font-size: 19px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,.15);
+            border-radius: 10px;
+            margin-right: 7px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,.85) !important;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 13px !important;
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,.15);
+            color: white !important;
+        }
+
+        .student-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .student-nav img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,.6);
+        }
+
+        .student-nav span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 285px;
+            position: relative;
+            background:
+                linear-gradient(90deg,
+                    rgba(15,23,42,.85),
+                    rgba(37,99,235,.58)),
+                url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=85")
+                center/cover;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .hero-content {
+            padding: 45px 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 30px;
+            background: rgba(255,255,255,.13);
+            backdrop-filter: blur(8px);
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            font-size: 14px;
+            line-height: 1.7;
+            opacity: .86;
+            margin-bottom: 0;
+        }
+
+        /* FILTER */
+        .filter-wrapper {
+            margin-top: -30px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .filter-card {
+            background: white;
+            border-radius: 15px;
+            padding: 18px;
+            box-shadow: 0 8px 30px rgba(15,23,42,.08);
+        }
+
+        .filter-label {
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 650;
+            margin-bottom: 5px;
+        }
+
+        .form-control,
+        .form-select {
+            height: 43px;
+            border-color: #e0e6ed;
+            font-size: 13px;
+            border-radius: 9px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 13px;
+            top: 14px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .search-box input {
+            padding-left: 36px;
+        }
+
+        /* SECTION */
+        .events-section {
+            padding: 35px 0 65px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-heading h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .result-count {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* EVENT CARD */
+        .event-card {
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 22px rgba(15,23,42,.06);
+            transition: .25s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 13px 30px rgba(15,23,42,.12);
+        }
+
+        .event-image {
+            height: 190px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
+        }
+
+        .event-category {
+            position: absolute;
+            top: 13px;
+            left: 13px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.93);
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+        .event-status {
+            position: absolute;
+            top: 13px;
+            right: 13px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .event-body {
+            padding: 17px;
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 750;
+            margin-bottom: 9px;
+            line-height: 1.35;
+        }
+
+        .event-description {
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.6;
+            height: 36px;
+            overflow: hidden;
+            margin-bottom: 13px;
+        }
+
+        .event-info {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #64748b;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .event-info i {
+            color: #2563eb;
+            width: 14px;
+            text-align: center;
+        }
+
+        .event-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 13px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .participants {
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+        .detail-btn {
+            border: none;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .detail-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* EMPTY */
+        .empty-state {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 55px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(15,23,42,.05);
+        }
+
+        .empty-icon {
+            width: 65px;
+            height: 65px;
+            margin: auto auto 15px;
+            border-radius: 18px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .empty-state h5 {
+            font-weight: 750;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #172033;
+            color: #94a3b8;
+            padding: 28px 0;
+            font-size: 11px;
+        }
+
+        .footer-title {
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 768px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero p {
+                font-size: 12px;
+            }
+
+            .filter-wrapper {
+                margin-top: -20px;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .student-nav span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="student-events.html">
+
+            <span class="brand-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+            </span>
+
+            School Event Hub
+
+        </a>
+
+
+        <button class="navbar-toggler bg-light"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="student-events.html">
+
+                        <i class="fa-solid fa-house me-1"></i>
+                        Bosh sahifa
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       href="events.html">
+
+                        <i class="fa-solid fa-calendar-days me-1"></i>
+                        Tadbirlar
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="announcements.html">
+
+                        <i class="fa-solid fa-bullhorn me-1"></i>
+                        E'lonlar
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="student-profile.html">
+
+                        <i class="fa-solid fa-user me-1"></i>
+                        Profil
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="student-nav"
+                       href="student-profile.html">
+
+                        <img
+                            src="https://i.pravatar.cc/100?img=12"
+                            alt="Azizbek">
+
+                        <span>
+                            Azizbek
+                        </span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <i class="fa-solid fa-calendar-check me-1"></i>
+
+                SCHOOL EVENT HUB
+
+            </div>
+
+
+            <h1>
+                Maktab tadbirlari
+            </h1>
+
+
+            <p>
+                Maktabimizda bo‘lib o‘tadigan barcha tadbirlar,
+                tanlovlar, musobaqalar va ma'rifiy uchrashuvlarni
+                shu yerdan toping va o‘zingizga yoqqan tadbirda
+                ishtirok eting.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FILTER -->
+<div class="container filter-wrapper">
+
+    <div class="filter-card">
+
+        <div class="row g-3 align-items-end">
+
+            <div class="col-lg-5">
+
+                <div class="filter-label">
+                    Qidirish
+                </div>
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="Tadbir nomini qidiring...">
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg-2">
+
+                <div class="filter-label">
+                    Kategoriya
+                </div>
+
+                <select id="categoryFilter"
+                        class="form-select">
+
+                    <option value="all">
+                        Barchasi
+                    </option>
+
+                    <option value="intellectual">
+                        Intellektual
+                    </option>
+
+                    <option value="culture">
+                        Madaniyat
+                    </option>
+
+                    <option value="sport">
+                        Sport
+                    </option>
+
+                    <option value="education">
+                        Ta'lim
+                    </option>
+
+                    <option value="patriotic">
+                        Vatanparvarlik
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg-2">
+
+                <div class="filter-label">
+                    Vaqt
+                </div>
+
+                <select id="dateFilter"
+                        class="form-select">
+
+                    <option value="all">
+                        Barchasi
+                    </option>
+
+                    <option value="upcoming">
+                        Yaqin tadbirlar
+                    </option>
+
+                    <option value="month">
+                        Shu oy
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg-3">
+
+                <button
+                    class="btn btn-outline-secondary w-100"
+                    style="height:43px;font-size:12px"
+                    onclick="resetFilters()">
+
+                    <i class="fa-solid fa-rotate-left me-1"></i>
+
+                    Filtrlarni tozalash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EVENTS -->
+<section class="events-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <h3>
+                Barcha tadbirlar
+            </h3>
+
+            <div class="result-count">
+
+                <span id="resultCount">
+                    8
+                </span>
+                ta tadbir topildi
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4"
+             id="eventsContainer">
+
+
+            <!-- EVENT 1 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="intellectual"
+                 data-title="Zakovat intellektual turniri"
+                 data-date="2026-10-15">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80"
+                            alt="Zakovat">
+
+                        <span class="event-category">
+                            Intellektual
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Zakovat intellektual turniri
+                        </div>
+
+                        <div class="event-description">
+                            O‘quvchilar o‘rtasida bilim va mantiqiy
+                            fikrlashni rivojlantirishga qaratilgan
+                            intellektual bellashuv.
+                        </div>
+
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            15-oktabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            14:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maktab faollar zali
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+
+                                <i class="fa-solid fa-users me-1"></i>
+                                38 ishtirokchi
+
+                            </span>
+
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 2 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="culture"
+                 data-title="Kitobxonlik tanlovi"
+                 data-date="2026-10-20">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80"
+                            alt="Kitobxonlik">
+
+                        <span class="event-category">
+                            Madaniyat
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Kitobxonlik tanlovi
+                        </div>
+
+                        <div class="event-description">
+                            Eng faol va bilimdon kitobxonlarni
+                            aniqlashga qaratilgan maktab tanlovi.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            20-oktabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            10:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maktab kutubxonasi
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                24 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 3 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="sport"
+                 data-title="Maktab futbol musobaqasi"
+                 data-date="2026-10-25">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=900&q=80"
+                            alt="Futbol">
+
+                        <span class="event-category">
+                            Sport
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Maktab futbol musobaqasi
+                        </div>
+
+                        <div class="event-description">
+                            Sinflar o‘rtasida sog‘lom turmush tarzi
+                            va jamoaviy ruhni rivojlantirishga
+                            qaratilgan futbol musobaqasi.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            25-oktabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            15:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maktab sport maydoni
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                64 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 4 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="education"
+                 data-title="Fan olimpiadasi"
+                 data-date="2026-10-28">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80"
+                            alt="Olimpiada">
+
+                        <span class="event-category">
+                            Ta'lim
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Fan olimpiadasi
+                        </div>
+
+                        <div class="event-description">
+                            Matematika, informatika, fizika va
+                            boshqa fanlar bo‘yicha maktab bosqichi.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            28-oktabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            09:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Informatika xonasi
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                42 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 5 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="patriotic"
+                 data-title="Vatan himoyachilari kuni"
+                 data-date="2026-01-14">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1464207687429-7505649dae38?auto=format&fit=crop&w=900&q=80"
+                            alt="Vatanparvarlik">
+
+                        <span class="event-category">
+                            Vatanparvarlik
+                        </span>
+
+                        <span class="event-status"
+                              style="background:#f1f5f9;color:#64748b">
+
+                            Yakunlangan
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Vatan himoyachilari kuni
+                        </div>
+
+                        <div class="event-description">
+                            Vatanparvarlik ruhidagi uchrashuvlar,
+                            musobaqalar va ma'naviy-ma'rifiy tadbirlar.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            14-yanvar, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            11:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maktab majlislar zali
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                95 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Ko‘rish
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 6 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="culture"
+                 data-title="Navro‘z bayrami"
+                 data-date="2026-03-21">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80"
+                            alt="Navro‘z">
+
+                        <span class="event-category">
+                            Madaniyat
+                        </span>
+
+                        <span class="event-status"
+                              style="background:#f1f5f9;color:#64748b">
+
+                            Yakunlangan
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Navro‘z bayrami
+                        </div>
+
+                        <div class="event-description">
+                            Milliy qadriyatlar, xalq o‘yinlari,
+                            kuy-qo‘shiqlar va milliy taomlar bayrami.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            21-mart, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            10:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maktab hovlisi
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                210 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Ko‘rish
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 7 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="education"
+                 data-title="IT va innovatsiyalar kuni"
+                 data-date="2026-11-05">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+                            alt="IT">
+
+                        <span class="event-category">
+                            Ta'lim
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            IT va innovatsiyalar kuni
+                        </div>
+
+                        <div class="event-description">
+                            O‘quvchilarning texnologiya, dasturlash
+                            va innovatsion loyihalarini namoyish etish kuni.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            5-noyabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            13:00
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            IT laboratoriya
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                31 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 8 -->
+            <div class="col-md-6 col-lg-4 event-item"
+                 data-category="sport"
+                 data-title="Shaxmat musobaqasi"
+                 data-date="2026-11-10">
+
+                <div class="event-card">
+
+                    <div class="event-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?auto=format&fit=crop&w=900&q=80"
+                            alt="Shaxmat">
+
+                        <span class="event-category">
+                            Sport
+                        </span>
+
+                        <span class="event-status">
+                            Ochiq
+                        </span>
+
+                    </div>
+
+
+                    <div class="event-body">
+
+                        <div class="event-title">
+                            Shaxmat musobaqasi
+                        </div>
+
+                        <div class="event-description">
+                            O‘quvchilar o‘rtasida strategik fikrlashni
+                            rivojlantiruvchi shaxmat musobaqasi.
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-calendar"></i>
+                            10-noyabr, 2026
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-regular fa-clock"></i>
+                            14:30
+                        </div>
+
+                        <div class="event-info">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Shaxmat xonasi
+                        </div>
+
+
+                        <div class="event-footer">
+
+                            <span class="participants">
+                                <i class="fa-solid fa-users me-1"></i>
+                                19 ishtirokchi
+                            </span>
+
+                            <a href="event-detail.html"
+                               class="detail-btn">
+
+                                Batafsil
+                                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EMPTY -->
+        <div class="empty-state"
+             id="emptyState">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-calendar-xmark"></i>
+
+            </div>
+
+            <h5>
+                Tadbir topilmadi
+            </h5>
+
+            <p>
+                Qidiruv yoki filter parametrlarini o‘zgartirib ko‘ring.
+            </p>
+
+            <button class="btn btn-primary btn-sm"
+                    onclick="resetFilters()">
+
+                Filtrlarni tozalash
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <div class="footer-title">
+                    School Event Hub
+                </div>
+
+                <div>
+                    Maktab tadbirlarini boshqarish va
+                    o‘quvchilarni faol ishtirok etishga
+                    jalb qilish platformasi.
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="footer-title">
+                    Havolalar
+                </div>
+
+                <div>
+                    <a href="student-events.html"
+                       class="text-secondary text-decoration-none">
+
+                        Bosh sahifa
+
+                    </a>
+                </div>
+
+                <div>
+                    <a href="events.html"
+                       class="text-secondary text-decoration-none">
+
+                        Tadbirlar
+
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="footer-title">
+                    Profil
+                </div>
+
+                <div>
+                    <a href="student-profile.html"
+                       class="text-secondary text-decoration-none">
+
+                        Mening profilim
+
+                    </a>
+                </div>
+
+                <div>
+                    <a href="login.html"
+                       class="text-secondary text-decoration-none">
+
+                        Chiqish
+
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr style="border-color:#334155;margin:22px 0">
+
+
+        <div class="text-center">
+
+            © 2026 School Event Hub. Barcha huquqlar himoyalangan.
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const categoryFilter =
+        document.getElementById("categoryFilter");
+
+    const dateFilter =
+        document.getElementById("dateFilter");
+
+    const eventItems =
+        document.querySelectorAll(".event-item");
+
+    const resultCount =
+        document.getElementById("resultCount");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+
+    function filterEvents() {
+
+        const search =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+        const category =
+            categoryFilter.value;
+
+        const date =
+            dateFilter.value;
+
+
+        let visibleCount = 0;
+
+
+        eventItems.forEach(function(item) {
+
+            const title =
+                item.dataset.title.toLowerCase();
+
+            const itemCategory =
+                item.dataset.category;
+
+            const itemDate =
+                new Date(item.dataset.date);
+
+            const now =
+                new Date("2026-10-07");
+
+
+            let matchesSearch =
+                title.includes(search);
+
+            let matchesCategory =
+                category === "all" ||
+                itemCategory === category;
+
+            let matchesDate = true;
+
+
+            if (date === "upcoming") {
+
+                matchesDate =
+                    itemDate >= now;
+
+            }
+
+
+            if (date === "month") {
+
+                matchesDate =
+                    itemDate.getMonth() === 9 &&
+                    itemDate.getFullYear() === 2026;
+
+            }
+
+
+            if (
+                matchesSearch &&
+                matchesCategory &&
+                matchesDate
+            ) {
+
+                item.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+
+        resultCount.textContent =
+            visibleCount;
+
+
+        if (visibleCount === 0) {
+
+            emptyState.style.display = "block";
+
+        } else {
+
+            emptyState.style.display = "none";
+
+        }
+
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        filterEvents
+    );
+
+
+    categoryFilter.addEventListener(
+        "change",
+        filterEvents
+    );
+
+
+    dateFilter.addEventListener(
+        "change",
+        filterEvents
+    );
+
+
+    function resetFilters() {
+
+        searchInput.value = "";
+
+        categoryFilter.value = "all";
+
+        dateFilter.value = "all";
+
+        filterEvents();
+
+    }
+
+
+    filterEvents();
+
+</script>
+
+</body>
+</html>
+```

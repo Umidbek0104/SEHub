@@ -1,0 +1,2111 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Galereya | School Event Hub</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            color: #1f2937;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(
+                180deg,
+                #0d6efd,
+                #174ea6
+            );
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .brand {
+            padding: 25px 20px;
+            font-size: 21px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+        }
+
+        .brand i {
+            margin-right: 8px;
+        }
+
+        .menu-title {
+            padding: 20px 20px 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: .65;
+            letter-spacing: .5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 20px;
+            margin: 3px 10px;
+            border-radius: 10px;
+            color: rgba(255,255,255,.85);
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: rgba(255,255,255,.17);
+            color: white;
+        }
+
+        .sidebar a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .page-title {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile img {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .profile-role {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.05);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8f1ff;
+            color: #0d6efd;
+            font-size: 22px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        /* ================= FILTER ================= */
+
+        .filter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 28px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.05);
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 44px;
+            border-radius: 10px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 14px;
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            padding-left: 42px;
+        }
+
+        /* ================= GALLERY ================= */
+
+        .gallery-card {
+            background: white;
+            border-radius: 16px;
+            margin-top: 22px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.05);
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .gallery-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .media-card {
+            background: white;
+            border: 1px solid #edf0f4;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: .25s;
+            height: 100%;
+        }
+
+        .media-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(15,23,42,.10);
+        }
+
+        .media-image {
+            position: relative;
+            height: 210px;
+            overflow: hidden;
+        }
+
+        .media-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .media-card:hover .media-image img {
+            transform: scale(1.05);
+        }
+
+        .media-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,.42);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: .25s;
+        }
+
+        .media-card:hover .media-overlay {
+            opacity: 1;
+        }
+
+        .overlay-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            color: #0d6efd;
+        }
+
+        .overlay-btn.delete {
+            color: #dc3545;
+        }
+
+        .media-info {
+            padding: 15px;
+        }
+
+        .media-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .media-meta {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #8b95a5;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            background: #e8f1ff;
+            color: #0d6efd;
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 55px;
+            color: #cbd5e1;
+        }
+
+        .empty-state h5 {
+            margin-top: 15px;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+        }
+
+        /* ================= UPLOAD ================= */
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .upload-area:hover {
+            border-color: #0d6efd;
+            background: #f8fbff;
+        }
+
+        .upload-area i {
+            font-size: 40px;
+            color: #0d6efd;
+            margin-bottom: 12px;
+        }
+
+        .upload-area p {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .upload-area small {
+            color: #6b7280;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+        }
+
+        @media (max-width: 992px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .profile-name,
+            .profile-role {
+                display: none;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .gallery-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <i class="fa-solid fa-calendar-days"></i>
+        School Event Hub
+    </div>
+
+    <div class="menu-title">
+        Asosiy
+    </div>
+
+    <a href="admin-dashboard.html">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+    </a>
+
+    <a href="events.html">
+        <i class="fa-solid fa-calendar"></i>
+        Tadbirlar
+    </a>
+
+    <a href="add-event.html">
+        <i class="fa-solid fa-plus"></i>
+        Tadbir qo‘shish
+    </a>
+
+    <a href="participants.html">
+        <i class="fa-solid fa-users"></i>
+        Ishtirokchilar
+    </a>
+
+    <a href="suggestions.html">
+        <i class="fa-solid fa-lightbulb"></i>
+        Takliflar
+    </a>
+
+    <a href="gallery.html" class="active">
+        <i class="fa-solid fa-images"></i>
+        Galereya
+    </a>
+
+    <div class="menu-title">
+        Boshqaruv
+    </div>
+
+    <a href="announcements.html">
+        <i class="fa-solid fa-bullhorn"></i>
+        E'lonlar
+    </a>
+
+    <a href="deputy-profile.html">
+        <i class="fa-solid fa-user-tie"></i>
+        Profil
+    </a>
+
+    <a href="login.html">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Chiqish
+    </a>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <button
+                class="mobile-menu"
+                id="menuBtn"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div>
+
+                <div class="page-title">
+                    Galereya
+                </div>
+
+                <small class="text-muted">
+                    Maktab tadbirlaridan foto va media
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile">
+
+            <div class="text-end">
+
+                <div class="profile-name">
+                    Dilnoza Karimova
+                </div>
+
+                <div class="profile-role">
+                    Direktor o‘rinbosari
+                </div>
+
+            </div>
+
+            <img
+                src="https://i.pravatar.cc/100?img=47"
+                alt="Profil"
+            >
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content">
+
+        <!-- ================= STATS ================= -->
+
+        <div class="row g-4">
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="stat-number">
+                            126
+                        </div>
+
+                        <div class="stat-label">
+                            Jami rasmlar
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="stat-number">
+                            18
+                        </div>
+
+                        <div class="stat-label">
+                            Videolar
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="stat-number">
+                            24
+                        </div>
+
+                        <div class="stat-label">
+                            Tadbirlar
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="stat-number">
+                            144
+                        </div>
+
+                        <div class="stat-label">
+                            Media fayllar
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FILTER ================= -->
+
+        <div class="filter-card">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-lg-5">
+
+                    <label class="form-label">
+                        Qidirish
+                    </label>
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="searchInput"
+                            placeholder="Tadbir yoki rasm nomi..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3">
+
+                    <label class="form-label">
+                        Kategoriya
+                    </label>
+
+                    <select
+                        class="form-select"
+                        id="categoryFilter"
+                    >
+
+                        <option value="all">
+                            Barcha kategoriyalar
+                        </option>
+
+                        <option value="Bayram">
+                            Bayramlar
+                        </option>
+
+                        <option value="Sport">
+                            Sport
+                        </option>
+
+                        <option value="Ta'lim">
+                            Ta'lim
+                        </option>
+
+                        <option value="Madaniyat">
+                            Madaniyat
+                        </option>
+
+                        <option value="Zakovat">
+                            Zakovat
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-lg-2">
+
+                    <button
+                        class="btn btn-outline-primary w-100"
+                        id="resetBtn"
+                    >
+                        <i class="fa-solid fa-rotate me-1"></i>
+                        Tozalash
+                    </button>
+
+                </div>
+
+
+                <div class="col-lg-2">
+
+                    <button
+                        class="btn btn-primary w-100"
+                        data-bs-toggle="modal"
+                        data-bs-target="#uploadModal"
+                    >
+                        <i class="fa-solid fa-plus me-1"></i>
+                        Media qo‘shish
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= GALLERY ================= -->
+
+        <div class="gallery-card">
+
+            <div class="gallery-header">
+
+                <div>
+
+                    <div class="gallery-title">
+                        Tadbirlar galereyasi
+                    </div>
+
+                    <small class="text-muted">
+                        Maktab hayotidagi muhim lahzalar
+                    </small>
+
+                </div>
+
+                <span
+                    class="badge bg-primary-subtle text-primary"
+                    id="mediaCount"
+                >
+                    8 ta media
+                </span>
+
+            </div>
+
+
+            <div
+                class="row g-4"
+                id="galleryGrid"
+            >
+
+                <!-- ================= CARD 1 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Navro‘z bayrami"
+                    data-category="Bayram"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=80"
+                                alt="Navro‘z"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Navro‘z bayrami
+                            </div>
+
+                            <span class="category-badge">
+                                Bayram
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    21.03.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 2 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Zakovat turniri"
+                    data-category="Zakovat"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80"
+                                alt="Zakovat"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Zakovat turniri
+                            </div>
+
+                            <span class="category-badge">
+                                Zakovat
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    05.10.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 3 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Kitobxonlik tanlovi"
+                    data-category="Ta'lim"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80"
+                                alt="Kitobxonlik"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Kitobxonlik tanlovi
+                            </div>
+
+                            <span class="category-badge">
+                                Ta'lim
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    07.10.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 4 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Sport musobaqasi"
+                    data-category="Sport"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80"
+                                alt="Sport"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Sport musobaqasi
+                            </div>
+
+                            <span class="category-badge">
+                                Sport
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    28.09.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 5 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Mustaqillik darsi"
+                    data-category="Ta'lim"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+                                alt="Mustaqillik"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Mustaqillik darsi
+                            </div>
+
+                            <span class="category-badge">
+                                Ta'lim
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    01.09.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 6 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="San’at festivali"
+                    data-category="Madaniyat"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=800&q=80"
+                                alt="San'at festivali"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                San’at festivali
+                            </div>
+
+                            <span class="category-badge">
+                                Madaniyat
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    25.09.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 7 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Yoshlar uchrashuvi"
+                    data-category="Madaniyat"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=800&q=80"
+                                alt="Yoshlar"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Yoshlar uchrashuvi
+                            </div>
+
+                            <span class="category-badge">
+                                Madaniyat
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    20.09.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CARD 8 ================= -->
+
+                <div
+                    class="col-xl-3 col-lg-4 col-md-6 gallery-item"
+                    data-title="Maktab ochiq eshiklar kuni"
+                    data-category="Bayram"
+                >
+
+                    <div class="media-card">
+
+                        <div class="media-image">
+
+                            <img
+                                src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
+                                alt="Ochiq eshiklar"
+                            >
+
+                            <div class="media-overlay">
+
+                                <button
+                                    class="overlay-btn"
+                                    onclick="viewMedia(this)"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="overlay-btn delete"
+                                    onclick="deleteMedia(this)"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="media-info">
+
+                            <div class="media-title">
+                                Ochiq eshiklar kuni
+                            </div>
+
+                            <span class="category-badge">
+                                Bayram
+                            </span>
+
+                            <div class="media-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    15.09.2026
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-image"></i>
+                                    Foto
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <i class="fa-regular fa-images"></i>
+
+                <h5>
+                    Media topilmadi
+                </h5>
+
+                <p>
+                    Qidiruv yoki tanlangan kategoriya bo‘yicha
+                    media mavjud emas.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= VIEW MODAL ================= -->
+
+<div
+    class="modal fade"
+    id="viewModal"
+    tabindex="-1"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="modalTitle"
+                >
+                    Tadbir rasmi
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+            <div class="modal-body p-0">
+
+                <img
+                    id="modalImage"
+                    src=""
+                    alt="Media"
+                    style="
+                        width:100%;
+                        max-height:550px;
+                        object-fit:cover;
+                    "
+                >
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Yopish
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= UPLOAD MODAL ================= -->
+
+<div
+    class="modal fade"
+    id="uploadModal"
+    tabindex="-1"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i class="fa-solid fa-cloud-arrow-up text-primary me-2"></i>
+
+                    Media qo‘shish
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+
+            <form id="uploadForm">
+
+                <div class="modal-body">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Media nomi
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="mediaTitle"
+                            placeholder="Masalan: Zakovat turniri"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Kategoriya
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="mediaCategory"
+                            required
+                        >
+
+                            <option value="">
+                                Tanlang
+                            </option>
+
+                            <option value="Bayram">
+                                Bayramlar
+                            </option>
+
+                            <option value="Sport">
+                                Sport
+                            </option>
+
+                            <option value="Ta'lim">
+                                Ta'lim
+                            </option>
+
+                            <option value="Madaniyat">
+                                Madaniyat
+                            </option>
+
+                            <option value="Zakovat">
+                                Zakovat
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Rasm
+                        </label>
+
+                        <label
+                            class="upload-area d-block"
+                            for="fileInput"
+                        >
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            <p>
+                                Rasm tanlash uchun bosing
+                            </p>
+
+                            <small>
+                                JPG, PNG yoki WEBP
+                            </small>
+
+                        </label>
+
+                        <input
+                            type="file"
+                            id="fileInput"
+                            accept="image/*"
+                        >
+
+                        <img
+                            id="previewImage"
+                            class="preview-image"
+                            alt="Preview"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Bekor qilish
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        <i class="fa-solid fa-upload me-1"></i>
+                        Yuklash
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script>
+
+    /* ================= MOBILE MENU ================= */
+
+    const menuBtn =
+        document.getElementById("menuBtn");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    menuBtn.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle("show");
+
+        }
+    );
+
+
+    /* ================= FILTER ================= */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const categoryFilter =
+        document.getElementById("categoryFilter");
+
+    const galleryItems =
+        document.querySelectorAll(".gallery-item");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    const mediaCount =
+        document.getElementById("mediaCount");
+
+
+    function filterGallery() {
+
+        const search =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+        const category =
+            categoryFilter.value;
+
+        let visible = 0;
+
+
+        galleryItems.forEach(item => {
+
+            const title =
+                item.dataset.title.toLowerCase();
+
+            const itemCategory =
+                item.dataset.category;
+
+
+            const searchMatch =
+                title.includes(search);
+
+
+            const categoryMatch =
+                category === "all" ||
+                itemCategory === category;
+
+
+            if (
+                searchMatch &&
+                categoryMatch
+            ) {
+
+                item.style.display = "";
+                visible++;
+
+            } else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+
+        mediaCount.textContent =
+            visible + " ta media";
+
+
+        if (visible === 0) {
+
+            emptyState.style.display =
+                "block";
+
+        } else {
+
+            emptyState.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        filterGallery
+    );
+
+
+    categoryFilter.addEventListener(
+        "change",
+        filterGallery
+    );
+
+
+    /* ================= RESET ================= */
+
+    document
+        .getElementById("resetBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                searchInput.value = "";
+
+                categoryFilter.value =
+                    "all";
+
+                filterGallery();
+
+            }
+        );
+
+
+    /* ================= VIEW MEDIA ================= */
+
+    function viewMedia(button) {
+
+        const card =
+            button.closest(".media-card");
+
+        const image =
+            card.querySelector("img");
+
+        const title =
+            card.querySelector(
+                ".media-title"
+            ).textContent.trim();
+
+
+        document.getElementById(
+            "modalImage"
+        ).src = image.src;
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent = title;
+
+
+        const modal =
+            new bootstrap.Modal(
+                document.getElementById(
+                    "viewModal"
+                )
+            );
+
+
+        modal.show();
+
+    }
+
+
+    /* ================= DELETE ================= */
+
+    function deleteMedia(button) {
+
+        const item =
+            button.closest(".gallery-item");
+
+        const title =
+            item.dataset.title;
+
+
+        if (
+            confirm(
+                `"${title}" mediasini o‘chirmoqchimisiz?`
+            )
+        ) {
+
+            item.remove();
+
+            /*
+                NodeList statik bo‘lgani uchun
+                qayta filter qilishda yangi
+                elementlar bilan ishlaymiz.
+            */
+
+            updateGalleryCount();
+
+            alert(
+                "Media muvaffaqiyatli o‘chirildi."
+            );
+
+        }
+
+    }
+
+
+    function updateGalleryCount() {
+
+        const items =
+            document.querySelectorAll(
+                ".gallery-item"
+            );
+
+        let visible = 0;
+
+        items.forEach(item => {
+
+            if (
+                item.style.display !==
+                "none"
+            ) {
+
+                visible++;
+
+            }
+
+        });
+
+
+        mediaCount.textContent =
+            visible + " ta media";
+
+
+        if (visible === 0) {
+
+            emptyState.style.display =
+                "block";
+
+        } else {
+
+            emptyState.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    /* ================= FILE PREVIEW ================= */
+
+    const fileInput =
+        document.getElementById(
+            "fileInput"
+        );
+
+    const previewImage =
+        document.getElementById(
+            "previewImage"
+        );
+
+
+    fileInput.addEventListener(
+        "change",
+        function() {
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+
+                previewImage.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e) {
+
+                    previewImage.src =
+                        e.target.result;
+
+                    previewImage.style.display =
+                        "block";
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+    /* ================= UPLOAD ================= */
+
+    document
+        .getElementById("uploadForm")
+        .addEventListener(
+            "submit",
+            function(e) {
+
+                e.preventDefault();
+
+
+                const title =
+                    document.getElementById(
+                        "mediaTitle"
+                    ).value;
+
+
+                const category =
+                    document.getElementById(
+                        "mediaCategory"
+                    ).value;
+
+
+                const file =
+                    fileInput.files[0];
+
+
+                if (!file) {
+
+                    alert(
+                        "Iltimos, rasm tanlang."
+                    );
+
+                    return;
+
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function(event) {
+
+                        const grid =
+                            document.getElementById(
+                                "galleryGrid"
+                            );
+
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "col-xl-3 col-lg-4 col-md-6 gallery-item";
+
+
+                        item.dataset.title =
+                            title;
+
+
+                        item.dataset.category =
+                            category;
+
+
+                        item.innerHTML = `
+
+                            <div class="media-card">
+
+                                <div class="media-image">
+
+                                    <img
+                                        src="${event.target.result}"
+                                        alt="${title}"
+                                    >
+
+                                    <div class="media-overlay">
+
+                                        <button
+                                            class="overlay-btn"
+                                            onclick="viewMedia(this)"
+                                        >
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+
+                                        <button
+                                            class="overlay-btn delete"
+                                            onclick="deleteMedia(this)"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="media-info">
+
+                                    <div class="media-title">
+                                        ${title}
+                                    </div>
+
+                                    <span class="category-badge">
+                                        ${category}
+                                    </span>
+
+                                    <div class="media-meta">
+
+                                        <span>
+                                            <i class="fa-regular fa-calendar"></i>
+                                            Bugun
+                                        </span>
+
+                                        <span>
+                                            <i class="fa-solid fa-image"></i>
+                                            Foto
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+
+                        grid.prepend(item);
+
+
+                        document
+                            .getElementById(
+                                "uploadForm"
+                            )
+                            .reset();
+
+
+                        previewImage.style.display =
+                            "none";
+
+
+                        bootstrap.Modal
+                            .getInstance(
+                                document.getElementById(
+                                    "uploadModal"
+                                )
+                            )
+                            .hide();
+
+
+                        filterGallery();
+
+
+                        alert(
+                            "Yangi media muvaffaqiyatli qo‘shildi."
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+</script>
+
+</body>
+</html>
+```

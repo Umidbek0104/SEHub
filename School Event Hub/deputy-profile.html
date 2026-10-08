@@ -1,0 +1,1807 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profil | School Event Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 255px;
+            background: linear-gradient(180deg, #1d4ed8, #1e40af);
+            color: white;
+            padding: 22px 15px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 0 10px 25px;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+            margin-bottom: 22px;
+        }
+
+        .logo-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .logo strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .logo small {
+            display: block;
+            font-size: 9px;
+            opacity: .7;
+            margin-top: 2px;
+        }
+
+        .menu-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            opacity: .55;
+            padding: 0 10px;
+            margin: 17px 0 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,.82);
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 9px;
+            margin-bottom: 3px;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .sidebar-link i {
+            width: 19px;
+            text-align: center;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: white;
+            background: rgba(255,255,255,.14);
+        }
+
+        .sidebar-link.active {
+            box-shadow: inset 3px 0 0 white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8edf3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .page-title h4 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .page-title span {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-user img {
+            width: 39px;
+            height: 39px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .admin-user strong {
+            font-size: 12px;
+            display: block;
+        }
+
+        .admin-user small {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        /* PROFILE HEADER */
+        .profile-header {
+            position: relative;
+            background:
+                linear-gradient(110deg, #1d4ed8, #2563eb 60%, #3b82f6);
+            color: white;
+            border-radius: 18px;
+            overflow: hidden;
+            padding: 32px;
+            margin-bottom: 25px;
+        }
+
+        .profile-header::before {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.07);
+            right: -90px;
+            top: -170px;
+        }
+
+        .profile-header::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.05);
+            right: 130px;
+            bottom: -190px;
+        }
+
+        .profile-header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .profile-image-wrap {
+            position: relative;
+        }
+
+        .profile-image {
+            width: 115px;
+            height: 115px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,.75);
+        }
+
+        .online-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #22c55e;
+            border: 3px solid white;
+            right: 5px;
+            bottom: 7px;
+        }
+
+        .profile-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 5px;
+        }
+
+        .profile-role {
+            font-size: 14px;
+            opacity: .85;
+            margin-bottom: 13px;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 11px;
+            opacity: .8;
+        }
+
+        .edit-profile-btn {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            z-index: 3;
+            background: rgba(255,255,255,.14);
+            border: 1px solid rgba(255,255,255,.3);
+            color: white;
+            border-radius: 9px;
+            padding: 9px 14px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .edit-profile-btn:hover {
+            background: white;
+            color: #2563eb;
+        }
+
+        /* STAT */
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(15,23,42,.05);
+            height: 100%;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 11px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        /* CARD */
+        .custom-card {
+            background: white;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(15,23,42,.05);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            padding: 19px 21px 13px;
+            font-size: 15px;
+            font-weight: 750;
+        }
+
+        .card-body-custom {
+            padding: 10px 21px 21px;
+        }
+
+        /* INFO */
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 37px;
+            height: 37px;
+            border-radius: 9px;
+            background: #f1f5f9;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-label {
+            color: #94a3b8;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            color: #334155;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        /* SECURITY */
+        .security-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-left i {
+            width: 35px;
+            height: 35px;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .security-left strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .security-left small {
+            display: block;
+            color: #94a3b8;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .security-btn {
+            border: 1px solid #dbe2ea;
+            background: white;
+            border-radius: 7px;
+            color: #475569;
+            font-size: 10px;
+            padding: 6px 10px;
+        }
+
+        .security-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        /* ACTIVITY */
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-text {
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .activity-text strong {
+            color: #1e293b;
+        }
+
+        .activity-time {
+            color: #94a3b8;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* FOOTER */
+        footer {
+            color: #94a3b8;
+            text-align: center;
+            font-size: 10px;
+            padding: 20px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 900px) {
+
+            .sidebar {
+                width: 75px;
+                padding: 18px 10px;
+            }
+
+            .logo {
+                justify-content: center;
+                padding: 0 0 20px;
+            }
+
+            .logo > div:last-child,
+            .menu-title,
+            .sidebar-link span {
+                display: none;
+            }
+
+            .sidebar-link {
+                justify-content: center;
+            }
+
+            .sidebar-link i {
+                width: auto;
+            }
+
+            .main {
+                margin-left: 75px;
+            }
+
+            .profile-header-content {
+                align-items: flex-start;
+            }
+
+        }
+
+        @media(max-width: 650px) {
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .page-title h4 {
+                font-size: 16px;
+            }
+
+            .admin-user > div {
+                display: none;
+            }
+
+            .content {
+                padding: 18px 12px;
+            }
+
+            .profile-header {
+                padding: 25px 20px;
+            }
+
+            .profile-header-content {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .profile-meta {
+                justify-content: center;
+            }
+
+            .edit-profile-btn {
+                position: static;
+                margin-top: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+
+        <div>
+            <strong>School Event Hub</strong>
+            <small>ADMIN PANEL</small>
+        </div>
+
+    </div>
+
+
+    <div class="menu-title">
+        Asosiy
+    </div>
+
+    <a href="admin-dashboard.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+
+    </a>
+
+
+    <a href="events.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Tadbirlar</span>
+
+    </a>
+
+
+    <a href="add-event.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-plus"></i>
+        <span>Tadbir qo‘shish</span>
+
+    </a>
+
+
+    <div class="menu-title">
+        Boshqaruv
+    </div>
+
+
+    <a href="participants.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-users"></i>
+        <span>Ishtirokchilar</span>
+
+    </a>
+
+
+    <a href="suggestions.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-comments"></i>
+        <span>Takliflar</span>
+
+    </a>
+
+
+    <a href="gallery.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-images"></i>
+        <span>Galereya</span>
+
+    </a>
+
+
+    <a href="announcements.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>E'lonlar</span>
+
+    </a>
+
+
+    <div class="menu-title">
+        Tizim
+    </div>
+
+
+    <a href="deputy-profile.html"
+       class="sidebar-link active">
+
+        <i class="fa-solid fa-user"></i>
+        <span>Profil</span>
+
+    </a>
+
+
+    <a href="#"
+       class="sidebar-link"
+       onclick="showSettings()">
+
+        <i class="fa-solid fa-gear"></i>
+        <span>Sozlamalar</span>
+
+    </a>
+
+
+    <a href="login.html"
+       class="sidebar-link">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Chiqish</span>
+
+    </a>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <div class="page-title">
+
+            <h4>Profil</h4>
+
+            <span>
+                Shaxsiy va ish ma'lumotlari
+            </span>
+
+        </div>
+
+
+        <div class="admin-user">
+
+            <img
+                src="https://i.pravatar.cc/100?img=47"
+                alt="Madina Karimova">
+
+            <div>
+
+                <strong>
+                    Madina Karimova
+                </strong>
+
+                <small>
+                    Direktor o‘rinbosari
+                </small>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="content">
+
+
+        <!-- PROFILE HEADER -->
+        <section class="profile-header">
+
+            <div class="profile-header-content">
+
+                <div class="profile-image-wrap">
+
+                    <img
+                        src="https://i.pravatar.cc/250?img=47"
+                        class="profile-image"
+                        alt="Madina Karimova">
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Madina Karimova
+                    </h2>
+
+                    <div class="profile-role">
+
+                        Madaniyat va ma'rifat ishlari
+                        bo‘yicha direktor o‘rinbosari
+
+                    </div>
+
+
+                    <div class="profile-meta">
+
+                        <span>
+                            <i class="fa-solid fa-school me-1"></i>
+                            25-sonli maktab
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-calendar me-1"></i>
+                            2022-yildan beri
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-circle-check me-1"></i>
+                            Faol hisob
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button class="edit-profile-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editProfileModal">
+
+                <i class="fa-solid fa-pen me-1"></i>
+                Profilni tahrirlash
+
+            </button>
+
+        </section>
+
+
+        <!-- STATS -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        24
+                    </div>
+
+                    <div class="stat-label">
+                        Tashkil etilgan tadbirlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        2,846
+                    </div>
+
+                    <div class="stat-label">
+                        Jami ishtirokchilar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        86
+                    </div>
+
+                    <div class="stat-label">
+                        Qabul qilingan takliflar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        144
+                    </div>
+
+                    <div class="stat-label">
+                        Media fayllar
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- LEFT -->
+            <div class="col-lg-7">
+
+
+                <!-- PERSONAL INFORMATION -->
+                <div class="custom-card">
+
+                    <div class="card-title">
+
+                        <i class="fa-solid fa-id-card text-primary me-2"></i>
+
+                        Shaxsiy ma'lumotlar
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    To‘liq ism
+                                </div>
+
+                                <div class="info-value">
+                                    Madina Karimova
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Elektron pochta
+                                </div>
+
+                                <div class="info-value">
+                                    madina.karimova@school.uz
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Telefon
+                                </div>
+
+                                <div class="info-value">
+                                    +998 90 555 12 34
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Ish joyi
+                                </div>
+
+                                <div class="info-value">
+                                    25-sonli umumiy o‘rta ta'lim maktabi
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Lavozim
+                                </div>
+
+                                <div class="info-value">
+                                    Direktor o‘rinbosari
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Tizimga qo‘shilgan sana
+                                </div>
+
+                                <div class="info-value">
+                                    15-sentyabr, 2022-yil
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECENT ACTIVITY -->
+                <div class="custom-card">
+
+                    <div class="card-title">
+
+                        <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>
+
+                        So‘nggi faoliyat
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="activity-text">
+
+                                    <strong>
+                                        Zakovat turniri
+                                    </strong>
+                                    tadbirini yaratdingiz.
+
+                                </div>
+
+                                <div class="activity-time">
+                                    Bugun, 14:25
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-reply"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="activity-text">
+
+                                    O‘quvchi taklifiga
+                                    <strong>
+                                        javob berdingiz.
+                                    </strong>
+
+                                </div>
+
+                                <div class="activity-time">
+                                    Bugun, 11:42
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="activity-text">
+
+                                    Galereyaga
+                                    <strong>
+                                        8 ta media
+                                    </strong>
+                                    fayl qo‘shdingiz.
+
+                                </div>
+
+                                <div class="activity-time">
+                                    Kecha, 16:20
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="activity-text">
+
+                                    <strong>
+                                        E'lon
+                                    </strong>
+                                    joylashtirdingiz.
+
+                                </div>
+
+                                <div class="activity-time">
+                                    5-oktabr, 09:10
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="col-lg-5">
+
+
+                <!-- SECURITY -->
+                <div class="custom-card">
+
+                    <div class="card-title">
+
+                        <i class="fa-solid fa-shield-halved text-success me-2"></i>
+
+                        Xavfsizlik
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="security-item">
+
+                            <div class="security-left">
+
+                                <i class="fa-solid fa-lock"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Parol
+                                    </strong>
+
+                                    <small>
+                                        Oxirgi marta 15 kun oldin o‘zgartirilgan
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <button class="security-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#passwordModal">
+
+                                O‘zgartirish
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="security-item">
+
+                            <div class="security-left">
+
+                                <i class="fa-solid fa-mobile-screen"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Telefon tasdiqlash
+                                    </strong>
+
+                                    <small>
+                                        +998 90 *** ** 34
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-success-subtle text-success">
+                                Tasdiqlangan
+                            </span>
+
+                        </div>
+
+
+                        <div class="security-item">
+
+                            <div class="security-left">
+
+                                <i class="fa-solid fa-envelope-circle-check"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Email
+                                    </strong>
+
+                                    <small>
+                                        madina.karimova@school.uz
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-success-subtle text-success">
+                                Tasdiqlangan
+                            </span>
+
+                        </div>
+
+
+                        <div class="security-item">
+
+                            <div class="security-left">
+
+                                <i class="fa-solid fa-clock"></i>
+
+                                <div>
+
+                                    <strong>
+                                        So‘nggi kirish
+                                    </strong>
+
+                                    <small>
+                                        Bugun, 08:32
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SETTINGS -->
+                <div class="custom-card">
+
+                    <div class="card-title">
+
+                        <i class="fa-solid fa-sliders text-primary me-2"></i>
+
+                        Tezkor sozlamalar
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="form-check form-switch mb-3">
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="notificationSwitch"
+                                   checked>
+
+                            <label class="form-check-label small"
+                                   for="notificationSwitch">
+
+                                Yangi takliflar haqida bildirishnoma
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check form-switch mb-3">
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="eventSwitch"
+                                   checked>
+
+                            <label class="form-check-label small"
+                                   for="eventSwitch">
+
+                                Tadbirlar bo‘yicha bildirishnoma
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-check form-switch">
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="emailSwitch">
+
+                            <label class="form-check-label small"
+                                   for="emailSwitch">
+
+                                Email orqali xabar yuborish
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DANGER -->
+                <div class="custom-card">
+
+                    <div class="card-title text-danger">
+
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+
+                        Hisob amallari
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <p class="text-muted small mb-3">
+
+                            Hisobingizdan chiqishingiz yoki
+                            xavfsizlik sozlamalarini boshqarishingiz mumkin.
+
+                        </p>
+
+
+                        <div class="d-grid gap-2">
+
+                            <button class="btn btn-outline-danger btn-sm"
+                                    onclick="logout()">
+
+                                <i class="fa-solid fa-right-from-bracket me-1"></i>
+
+                                Tizimdan chiqish
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        © 2026 School Event Hub · Admin boshqaruv paneli
+    </footer>
+
+</main>
+
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal fade"
+     id="editProfileModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0"
+             style="border-radius:17px">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title fw-bold">
+                    Profilni tahrirlash
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <label class="form-label">
+                    To‘liq ism
+                </label>
+
+                <input type="text"
+                       class="form-control mb-3"
+                       value="Madina Karimova">
+
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input type="email"
+                       class="form-control mb-3"
+                       value="madina.karimova@school.uz">
+
+
+                <label class="form-label">
+                    Telefon
+                </label>
+
+                <input type="text"
+                       class="form-control mb-3"
+                       value="+998 90 555 12 34">
+
+
+                <label class="form-label">
+                    Lavozim
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       value="Direktor o‘rinbosari">
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-light"
+                        data-bs-dismiss="modal">
+
+                    Bekor qilish
+
+                </button>
+
+                <button class="btn btn-primary"
+                        onclick="saveProfile()">
+
+                    <i class="fa-solid fa-check me-1"></i>
+
+                    Saqlash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PASSWORD MODAL -->
+<div class="modal fade"
+     id="passwordModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0"
+             style="border-radius:17px">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title fw-bold">
+                    Parolni o‘zgartirish
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <label class="form-label">
+                    Joriy parol
+                </label>
+
+                <input type="password"
+                       id="oldPassword"
+                       class="form-control mb-3"
+                       placeholder="Joriy parolingiz">
+
+
+                <label class="form-label">
+                    Yangi parol
+                </label>
+
+                <input type="password"
+                       id="newPassword"
+                       class="form-control mb-3"
+                       placeholder="Yangi parol">
+
+
+                <label class="form-label">
+                    Yangi parolni tasdiqlang
+                </label>
+
+                <input type="password"
+                       id="confirmPassword"
+                       class="form-control"
+                       placeholder="Yangi parolni qayta kiriting">
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-light"
+                        data-bs-dismiss="modal">
+
+                    Bekor qilish
+
+                </button>
+
+                <button class="btn btn-primary"
+                        onclick="changePassword()">
+
+                    <i class="fa-solid fa-lock me-1"></i>
+
+                    Parolni saqlash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SETTINGS MODAL -->
+<div class="modal fade"
+     id="settingsModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0"
+             style="border-radius:17px">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title fw-bold">
+                    Sozlamalar
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="form-check form-switch mb-3">
+
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked>
+
+                    <label class="form-check-label">
+                        Bildirishnomalarni yoqish
+                    </label>
+
+                </div>
+
+
+                <div class="form-check form-switch mb-3">
+
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked>
+
+                    <label class="form-check-label">
+                        Yangi tadbirlar haqida xabar
+                    </label>
+
+                </div>
+
+
+                <div class="form-check form-switch">
+
+                    <input class="form-check-input"
+                           type="checkbox">
+
+                    <label class="form-check-label">
+                        Email xabarnomalar
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-primary"
+                        data-bs-dismiss="modal">
+
+                    Saqlash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-4">
+
+    <div class="toast"
+         id="mainToast">
+
+        <div class="toast-header">
+
+            <i class="fa-solid fa-circle-check text-success me-2"></i>
+
+            <strong class="me-auto">
+                School Event Hub
+            </strong>
+
+            <button class="btn-close"
+                    data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body"
+             id="toastText">
+
+            Amal muvaffaqiyatli bajarildi.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    function showToast(message) {
+
+        document.getElementById("toastText")
+            .textContent = message;
+
+        const toast =
+            new bootstrap.Toast(
+                document.getElementById("mainToast")
+            );
+
+        toast.show();
+
+    }
+
+
+    function saveProfile() {
+
+        const modal =
+            bootstrap.Modal.getInstance(
+                document.getElementById("editProfileModal")
+            );
+
+        modal.hide();
+
+        showToast(
+            "Profil ma'lumotlari muvaffaqiyatli saqlandi."
+        );
+
+    }
+
+
+    function changePassword() {
+
+        const oldPassword =
+            document.getElementById("oldPassword").value;
+
+        const newPassword =
+            document.getElementById("newPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+
+        if (!oldPassword ||
+            !newPassword ||
+            !confirmPassword) {
+
+            alert(
+                "Iltimos, barcha maydonlarni to‘ldiring."
+            );
+
+            return;
+        }
+
+
+        if (newPassword.length < 6) {
+
+            alert(
+                "Yangi parol kamida 6 ta belgidan iborat bo‘lishi kerak."
+            );
+
+            return;
+        }
+
+
+        if (newPassword !== confirmPassword) {
+
+            alert(
+                "Yangi parollar bir xil emas."
+            );
+
+            return;
+        }
+
+
+        const modal =
+            bootstrap.Modal.getInstance(
+                document.getElementById("passwordModal")
+            );
+
+        modal.hide();
+
+
+        document.getElementById("oldPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+
+
+        showToast(
+            "Parol muvaffaqiyatli o‘zgartirildi."
+        );
+
+    }
+
+
+    function showSettings() {
+
+        const modal =
+            new bootstrap.Modal(
+                document.getElementById("settingsModal")
+            );
+
+        modal.show();
+
+    }
+
+
+    function logout() {
+
+        if (
+            confirm(
+                "Tizimdan chiqishni xohlaysizmi?"
+            )
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
+```

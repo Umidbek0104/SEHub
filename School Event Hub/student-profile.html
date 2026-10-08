@@ -1,0 +1,1274 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profil | School Event Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #172033;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 14px 0;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, .18);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255,255,255,.15);
+            margin-right: 8px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,.88) !important;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 9px 14px !important;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,.14);
+            color: white !important;
+        }
+
+        .profile-nav {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .profile-nav img {
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,.6);
+        }
+
+        .profile-nav span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* HERO */
+        .profile-hero {
+            background:
+                linear-gradient(90deg, rgba(15,23,42,.86), rgba(37,99,235,.66)),
+                url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=85")
+                center/cover;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: white;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 55px 0;
+        }
+
+        .profile-photo {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255,255,255,.85);
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
+        }
+
+        .hero-name {
+            font-size: 31px;
+            font-weight: 800;
+            margin-top: 18px;
+            margin-bottom: 5px;
+        }
+
+        .hero-class {
+            opacity: .88;
+            font-size: 15px;
+        }
+
+        /* CONTENT */
+        .content {
+            margin-top: -25px;
+            position: relative;
+            z-index: 5;
+            padding-bottom: 60px;
+        }
+
+        .card-custom {
+            background: white;
+            border: none;
+            border-radius: 17px;
+            box-shadow: 0 5px 25px rgba(15,23,42,.06);
+            margin-bottom: 22px;
+        }
+
+        .card-header-custom {
+            padding: 20px 22px 10px;
+            font-weight: 750;
+            font-size: 16px;
+        }
+
+        .card-body-custom {
+            padding: 18px 22px 23px;
+        }
+
+        /* STATS */
+        .stat-card {
+            height: 100%;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 22px rgba(15,23,42,.06);
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 13px;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* INFO */
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: #f1f5f9;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .info-label {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        /* EVENT */
+        .event-item {
+            display: flex;
+            gap: 14px;
+            padding: 15px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            width: 53px;
+            height: 58px;
+            border-radius: 11px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .event-date strong {
+            font-size: 19px;
+            line-height: 1;
+        }
+
+        .event-date span {
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .event-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .event-meta {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .badge-event {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        /* EDIT */
+        .edit-btn {
+            border: 1px solid #dbe2ea;
+            background: white;
+            color: #475569;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .edit-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        /* ACHIEVEMENT */
+        .achievement {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px;
+            border-radius: 11px;
+            background: #f8fafc;
+            margin-bottom: 9px;
+        }
+
+        .achievement-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .achievement strong {
+            font-size: 13px;
+        }
+
+        .achievement small {
+            display: block;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #172033;
+            color: #94a3b8;
+            padding: 25px 0;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 768px) {
+
+            .profile-nav span {
+                display: none;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .profile-photo {
+                width: 105px;
+                height: 105px;
+            }
+
+            .hero-name {
+                font-size: 25px;
+            }
+
+            .content {
+                margin-top: -10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="student-events.html">
+
+            <span class="brand-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+            </span>
+
+            School Event Hub
+
+        </a>
+
+
+        <button class="navbar-toggler bg-light"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="student-events.html">
+
+                        <i class="fa-solid fa-house me-1"></i>
+                        Bosh sahifa
+
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="events.html">
+
+                        <i class="fa-solid fa-calendar me-1"></i>
+                        Tadbirlar
+
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="announcements.html">
+
+                        <i class="fa-solid fa-bullhorn me-1"></i>
+                        E'lonlar
+
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="student-profile.html">
+
+                        <i class="fa-solid fa-user me-1"></i>
+                        Profil
+
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="profile-nav"
+                       href="login.html">
+
+                        <img
+                            src="https://i.pravatar.cc/100?img=12"
+                            alt="Profil">
+
+                        <span>Azizbek</span>
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="profile-hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <img
+                src="https://i.pravatar.cc/250?img=12"
+                class="profile-photo"
+                alt="Azizbek">
+
+            <h1 class="hero-name">
+                Azizbek Karimov
+            </h1>
+
+            <div class="hero-class">
+
+                <i class="fa-solid fa-graduation-cap me-1"></i>
+
+                10-A sinf o‘quvchisi · 25-maktab
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTENT -->
+<main class="content">
+
+    <div class="container">
+
+
+        <!-- STATS -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        12
+                    </div>
+
+                    <div class="stat-label">
+                        Qatnashilgan tadbirlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        4
+                    </div>
+
+                    <div class="stat-label">
+                        Yutuqlar
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        860
+                    </div>
+
+                    <div class="stat-label">
+                        Faollik ballari
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-ranking-star"></i>
+                    </div>
+
+                    <div class="stat-number">
+                        #7
+                    </div>
+
+                    <div class="stat-label">
+                        Maktab reytingi
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- LEFT -->
+            <div class="col-lg-7">
+
+
+                <!-- PERSONAL INFO -->
+                <div class="card-custom">
+
+                    <div class="card-header-custom d-flex justify-content-between align-items-center">
+
+                        <span>
+                            <i class="fa-solid fa-circle-info text-primary me-2"></i>
+                            Shaxsiy ma'lumotlar
+                        </span>
+
+                        <button class="edit-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editProfileModal">
+
+                            <i class="fa-solid fa-pen me-1"></i>
+                            Tahrirlash
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="info-row">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    To‘liq ism
+                                </div>
+
+                                <div class="info-value">
+                                    Azizbek Karimov
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Maktab
+                                </div>
+
+                                <div class="info-value">
+                                    25-sonli umumiy o‘rta ta'lim maktabi
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Sinf
+                                </div>
+
+                                <div class="info-value">
+                                    10-A
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Email
+                                </div>
+
+                                <div class="info-value">
+                                    azizbek@school.uz
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <div class="info-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="info-label">
+                                    Telefon
+                                </div>
+
+                                <div class="info-value">
+                                    +998 90 123 45 67
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MY EVENTS -->
+                <div class="card-custom">
+
+                    <div class="card-header-custom">
+
+                        <i class="fa-solid fa-calendar-check text-primary me-2"></i>
+
+                        Mening tadbirlarim
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="event-item">
+
+                            <div class="event-date">
+
+                                <strong>15</strong>
+                                <span>OKT</span>
+
+                            </div>
+
+                            <div class="flex-grow-1">
+
+                                <div class="event-title">
+                                    Zakovat intellektual turniri
+                                </div>
+
+                                <div class="event-meta">
+                                    <i class="fa-regular fa-clock me-1"></i>
+                                    14:00 · Faollar zali
+                                </div>
+
+                                <span class="badge-event">
+                                    Ro‘yxatdan o‘tgan
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="event-item">
+
+                            <div class="event-date">
+
+                                <strong>20</strong>
+                                <span>OKT</span>
+
+                            </div>
+
+                            <div class="flex-grow-1">
+
+                                <div class="event-title">
+                                    Kitobxonlik tanlovi
+                                </div>
+
+                                <div class="event-meta">
+                                    <i class="fa-regular fa-clock me-1"></i>
+                                    10:00 · Kutubxona
+                                </div>
+
+                                <span class="badge-event">
+                                    Ro‘yxatdan o‘tgan
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="event-item">
+
+                            <div class="event-date">
+
+                                <strong>25</strong>
+                                <span>OKT</span>
+
+                            </div>
+
+                            <div class="flex-grow-1">
+
+                                <div class="event-title">
+                                    Maktab futbol musobaqasi
+                                </div>
+
+                                <div class="event-meta">
+                                    <i class="fa-regular fa-clock me-1"></i>
+                                    15:00 · Sport maydoni
+                                </div>
+
+                                <span class="badge-event">
+                                    Ro‘yxatdan o‘tgan
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <a href="events.html"
+                           class="btn btn-outline-primary btn-sm mt-3">
+
+                            Barcha tadbirlarni ko‘rish
+
+                            <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="col-lg-5">
+
+
+                <!-- ACHIEVEMENTS -->
+                <div class="card-custom">
+
+                    <div class="card-header-custom">
+
+                        <i class="fa-solid fa-trophy text-warning me-2"></i>
+
+                        Mening yutuqlarim
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="achievement">
+
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Zakovat — 1-o‘rin
+                                </strong>
+
+                                <small>
+                                    2026-yil maktab bosqichi
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="achievement">
+
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Eng faol kitobxon
+                                </strong>
+
+                                <small>
+                                    2026-yil sentyabr
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="achievement">
+
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Faol o‘quvchi
+                                </strong>
+
+                                <small>
+                                    860 faollik balli
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="card-custom">
+
+                    <div class="card-header-custom">
+
+                        <i class="fa-solid fa-bolt text-primary me-2"></i>
+
+                        Tezkor amallar
+
+                    </div>
+
+
+                    <div class="card-body-custom">
+
+                        <div class="d-grid gap-2">
+
+                            <a href="events.html"
+                               class="btn btn-light text-start">
+
+                                <i class="fa-solid fa-calendar-days text-primary me-2"></i>
+
+                                Yangi tadbirlarni ko‘rish
+
+                            </a>
+
+
+                            <a href="announcements.html"
+                               class="btn btn-light text-start">
+
+                                <i class="fa-solid fa-bullhorn text-primary me-2"></i>
+
+                                E'lonlarni ko‘rish
+
+                            </a>
+
+
+                            <button class="btn btn-light text-start"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#suggestionModal">
+
+                                <i class="fa-solid fa-comment-dots text-primary me-2"></i>
+
+                                Taklif yuborish
+
+                            </button>
+
+
+                            <a href="login.html"
+                               class="btn btn-light text-start text-danger">
+
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+                                Tizimdan chiqish
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal fade"
+     id="editProfileModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0"
+             style="border-radius:17px">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title fw-bold">
+                    Profilni tahrirlash
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <label class="form-label">
+                    Ism va familiya
+                </label>
+
+                <input type="text"
+                       class="form-control mb-3"
+                       value="Azizbek Karimov">
+
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input type="email"
+                       class="form-control mb-3"
+                       value="azizbek@school.uz">
+
+
+                <label class="form-label">
+                    Telefon
+                </label>
+
+                <input type="text"
+                       class="form-control mb-3"
+                       value="+998 90 123 45 67">
+
+
+                <label class="form-label">
+                    Telefon raqamni yashirish
+                </label>
+
+                <select class="form-select">
+
+                    <option>Ha</option>
+                    <option>Yo‘q</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-light"
+                        data-bs-dismiss="modal">
+
+                    Bekor qilish
+
+                </button>
+
+                <button class="btn btn-primary"
+                        onclick="saveProfile()">
+
+                    <i class="fa-solid fa-check me-1"></i>
+
+                    Saqlash
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SUGGESTION MODAL -->
+<div class="modal fade"
+     id="suggestionModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0"
+             style="border-radius:17px">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title fw-bold">
+                    Taklif yuborish
+                </h5>
+
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <label class="form-label">
+                    Taklif mavzusi
+                </label>
+
+                <input type="text"
+                       id="suggestionTitle"
+                       class="form-control mb-3"
+                       placeholder="Masalan: Yangi tadbir g‘oyasi">
+
+
+                <label class="form-label">
+                    Taklifingiz
+                </label>
+
+                <textarea id="suggestionText"
+                          class="form-control"
+                          rows="5"
+                          placeholder="Taklifingizni yozing..."></textarea>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button class="btn btn-light"
+                        data-bs-dismiss="modal">
+
+                    Bekor qilish
+
+                </button>
+
+                <button class="btn btn-primary"
+                        onclick="sendSuggestion()">
+
+                    <i class="fa-solid fa-paper-plane me-1"></i>
+
+                    Yuborish
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-4">
+
+    <div class="toast"
+         id="mainToast">
+
+        <div class="toast-header">
+
+            <i class="fa-solid fa-circle-check text-success me-2"></i>
+
+            <strong class="me-auto">
+                Muvaffaqiyatli
+            </strong>
+
+            <button class="btn-close"
+                    data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body"
+             id="toastText">
+
+            Amal muvaffaqiyatli bajarildi.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container text-center">
+
+        © 2026 School Event Hub · Maktab tadbirlarini boshqarish platformasi
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    function showToast(message) {
+
+        document.getElementById("toastText").textContent = message;
+
+        const toast =
+            new bootstrap.Toast(
+                document.getElementById("mainToast")
+            );
+
+        toast.show();
+
+    }
+
+
+    function saveProfile() {
+
+        const modal =
+            bootstrap.Modal.getInstance(
+                document.getElementById("editProfileModal")
+            );
+
+        modal.hide();
+
+        showToast("Profil ma'lumotlari saqlandi.");
+
+    }
+
+
+    function sendSuggestion() {
+
+        const title =
+            document.getElementById("suggestionTitle").value.trim();
+
+        const text =
+            document.getElementById("suggestionText").value.trim();
+
+
+        if (!title || !text) {
+
+            alert("Iltimos, barcha maydonlarni to‘ldiring.");
+
+            return;
+
+        }
+
+
+        const modal =
+            bootstrap.Modal.getInstance(
+                document.getElementById("suggestionModal")
+            );
+
+        modal.hide();
+
+
+        document.getElementById("suggestionTitle").value = "";
+        document.getElementById("suggestionText").value = "";
+
+
+        showToast("Taklifingiz muvaffaqiyatli yuborildi.");
+
+    }
+
+</script>
+
+</body>
+</html>
+```
